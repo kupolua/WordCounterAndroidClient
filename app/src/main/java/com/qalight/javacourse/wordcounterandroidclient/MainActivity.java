@@ -10,6 +10,7 @@ import android.view.ViewConfiguration;
 import java.lang.reflect.Field;
 
 import tasks.HttpRequestTask;
+import tasks.WordCountRequestTask;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -45,14 +46,14 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		new HttpRequestTask<MainActivity>().execute(this);
+//		new WordCountRequestTask<MainActivity>().execute(this);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_refresh) {
-			new HttpRequestTask<MainActivity>().execute(this);
+			new WordCountRequestTask<MainActivity>().execute(this);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

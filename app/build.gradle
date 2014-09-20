@@ -31,4 +31,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.3'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    /*compile 'commons-httpclient:commons-httpclient:3.1'*/
+    compile 'com.google.code.gson:gson:2.3'
+
+
+
 }
