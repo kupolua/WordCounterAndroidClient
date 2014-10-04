@@ -3,10 +3,8 @@ package tasks;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
-import com.qalight.javacourse.wordcounterandroidclient.Greeting;
-import com.qalight.javacourse.wordcounterandroidclient.R;
+import com.qalight.javacourse.wordcounterandroidclient.WsDefaultTestBean;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -14,12 +12,12 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by apple on 9/15/14.
  */
-public class HttpRequestTask<T extends Activity> extends AsyncTask<T, Void, Greeting> {
+public class HttpRequestTask<T extends Activity> extends AsyncTask<T, Void, WsDefaultTestBean> {
 
 	private T activity;
 
 	@Override
-	protected Greeting doInBackground(T... params) {
+	protected WsDefaultTestBean doInBackground(T... params) {
 		if (params == null || params.length < 1) {
 			throw new IllegalArgumentException();
 		}
@@ -30,7 +28,7 @@ public class HttpRequestTask<T extends Activity> extends AsyncTask<T, Void, Gree
 			final String url = "http://rest-service.guides.spring.io/greeting";
 			RestTemplate restTemplate = new RestTemplate();
 			restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-			Greeting greeting = restTemplate.getForObject(url, Greeting.class);
+			WsDefaultTestBean greeting = restTemplate.getForObject(url, WsDefaultTestBean.class);
 			return greeting;
 		} catch (Exception e) {
 			Log.e("MainActivity", e.getMessage(), e);
@@ -40,7 +38,7 @@ public class HttpRequestTask<T extends Activity> extends AsyncTask<T, Void, Gree
 	}
 
 	@Override
-	protected void onPostExecute(Greeting greeting) {
+	protected void onPostExecute(WsDefaultTestBean greeting) {
 //		TextView greetingIdText = (TextView) activity.findViewById(R.id.id_value);
 //		TextView greetingContentText = (TextView) activity.findViewById(R.id.content_value);
 //		greetingIdText.setText(greeting.getId());

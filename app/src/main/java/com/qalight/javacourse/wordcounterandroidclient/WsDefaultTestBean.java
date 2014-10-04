@@ -3,7 +3,7 @@ package com.qalight.javacourse.wordcounterandroidclient;
 /**
  * Created by apple on 9/15/14.
  */
-public class Greeting {
+public class WsDefaultTestBean {
 
     private String id;
     private String content;
