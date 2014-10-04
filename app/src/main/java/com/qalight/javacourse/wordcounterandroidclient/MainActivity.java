@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.Button;
 
 import java.lang.reflect.Field;
 
@@ -21,6 +23,14 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+	    Button buttonOk = (Button) findViewById(R.id.buttonOk);
+	    buttonOk.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			    getResult();
+		    }
+	    });
 
 	    /**
 	     * Prevent the use of hardware Settings icon
@@ -57,6 +67,10 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void getResult() {
+		new WordCountRequestTask<MainActivity>().execute(this);
 	}
 
 }

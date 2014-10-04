@@ -8,7 +8,7 @@
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity$PlaceholderFragment">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/id_label"
         android:text="@string/id_label"
         android:layout_width="wrap_content"
@@ -21,38 +21,89 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_below="@+id/id_label"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true" />-->
 
-    <TextView
+    <!--<TextView
         android:id="@+id/id_value"
         android:text="@string/id_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/id_label"
-        android:layout_marginLeft="50dp" />
+        android:layout_marginLeft="50dp" />-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/about_title"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/example_title"
+        android:id="@+id/aboutTitle"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/example_text"
+        android:id="@+id/exampleText"
+        android:layout_below="@+id/aboutTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp"
+        android:layout_marginBottom="15dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="Enter text to process it"
+        android:ems="10"
+        android:id="@+id/inputText"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/exampleText"
+        android:layout_marginBottom="29dp"
+        android:layout_toLeftOf="@+id/buttonOk"
+        android:layout_toStartOf="@+id/buttonOk"/>
 
     <ScrollView android:id="@+id/textAreaScroller"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/content_label"
-                android:layout_alignLeft="@+id/id_value"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_x="0px"
-                android:layout_y="25px"
-                android:scrollbars="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/exampleText"
+                android:scrollbars="vertical"
+                android:layout_marginTop="78dp">
+
         <TextView
-            android:id="@+id/content_value"
-            android:text="@string/content_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/content_label"
-            android:layout_alignLeft="@+id/id_value"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:scrollbars="vertical"
-            android:layout_alignParentBottom="true"/>
+            android:inputType="textMultiLine"
+            android:text="Your result will appear here"
+            android:id="@+id/resultText"
+            android:layout_toRightOf="@+id/textView"/>
+
     </ScrollView>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/buttonOk"
+        android:layout_alignBottom="@+id/inputText"
+        android:layout_alignRight="@+id/textAreaScroller"
+        android:layout_alignEnd="@+id/textAreaScroller"/>
+
 
 </RelativeLayout>

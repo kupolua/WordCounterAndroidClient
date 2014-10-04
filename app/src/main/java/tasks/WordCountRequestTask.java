@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.qalight.javacourse.wordcounterandroidclient.R;
-import com.qalight.javacourse.wordcounterandroidclient.WordCountBean;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -16,6 +15,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,7 +35,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 		activity = params[0];
 
 		try {
-			final String url = "http://95.158.60.148:8008/WordCounter";
+			final String url = "http://95.158.60.148:8008/WordCounter/countWords";
 			final String textUrl = "http://www.eslfast.com/supereasy/se/supereasy002.htm";
 
 			/*// Set the Content-Type header
@@ -52,17 +52,17 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
 			// Make the HTTP POST request, marshaling the request to JSON, and the response to a String
 
-			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-//			map.add("dataTypeResponse","json");
-//			map.add("dummyData","whatever");
-			map.add("userUrlsList","http://defas.com.ua/java/Policy_of_.UA.pdf");
+			MultiValueMap<String, String> wordCountMap = new LinkedMultiValueMap<String, String>();
+//			wordCountMap.add("dataTypeResponse","json");
+//			wordCountMap.add("dummyData","whatever");
+			wordCountMap.add("userUrlsList","http://defas.com.ua/java/Policy_of_.UA.pdf");
 
-//			ResponseEntity<WordCountBean> result = restTemplate.exchange(url, HttpMethod.GET, requestEntity, WordCountBean.class, map);
-			String result = restTemplate.getForObject(url, String.class, map);
-//			WordCountBean result = restTemplate.getForObject(url, WordCountBean.class, map);*/
+//			ResponseEntity<WordCountValues> result = restTemplate.exchange(url, HttpMethod.GET, requestEntity, WordCountValues.class, wordCountMap);
+			String result = restTemplate.getForObject(url, String.class, wordCountMap);
+//			WordCountValues result = restTemplate.getForObject(url, WordCountValues.class, wordCountMap);*/
 
 
-			return post(url, "Input url", textUrl);
+			return post(url, textUrl);
 		} catch (Exception e) {
 			Log.e("MainActivity", e.getMessage(), e);
 		}
@@ -71,18 +71,20 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 	}
 
 	@Override
-	protected void onPostExecute(String dummyData) {
-		TextView greetingContentText = (TextView) activity.findViewById(R.id.content_value);
-		greetingContentText.setText(dummyData);
+	protected void onPostExecute(String parsedTextResult) {
+		TextView resultText = (TextView) activity.findViewById(R.id.resultText);
+		resultText.setText(parsedTextResult);
 	}
 
-	private String post(String url, String formVar, String textUrl) throws IOException {
-		OkHttpClient client = new OkHttpClient();
+	private String post(String url, String textUrl) throws IOException {
+		/*OkHttpClient client = new OkHttpClient();
 		final Gson gson = new Gson();
 //		RequestBody body = RequestBody.create(JSON, json);
 
 		RequestBody formBody = new FormEncodingBuilder()
-				.add(formVar, textUrl)
+				.add("dataTypeResponse","json")
+				.add("dummyData","whatever")
+				.add("userUrlsList", textUrl)
 				.build();
 
 		Request request = new Request.Builder()
@@ -90,7 +92,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 				.post(formBody)
 
 				//just as an extra precaution
-				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
+				.addHeader("Accept", "application/json, text/javascript,*; q=0.01")
 				.addHeader("Accept-Encoding","gzip, deflate")
 				.addHeader("Accept-Language","en-US,en;q=0.5")
 				.addHeader("Cache-Control",	"no-cache")
@@ -107,21 +109,43 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 		Response response = client.newCall(request).execute();
 		if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-		Gist gist = gson.fromJson(response.body().charStream(), Gist.class);
-		StringBuilder sb = new StringBuilder();
-		for (Map.Entry<String, GistFile> entry : gist.files.entrySet()) {
+		WordCountValues gist = gson.fromJson(response.body().charStream(), WordCountValues.class);
+		if (gist.wordCountMap == null || gist.wordCountMap.size() < 1) return "";*/
+
+		/*StringBuilder sb = new StringBuilder();
+		for (Map.Entry<String, Integer> entry : gist.wordCountMap.entrySet()) {
 			sb.append(entry.getKey() + ", ");
-			sb.append(entry.getValue().content + "\n");
+			sb.append(entry.getValue() + "\n");
+		}*/
+
+		StringBuilder sb = new StringBuilder();
+		WordCountValues wordCountValues = new WordCountValues();
+		wordCountValues.mockBean("вера", 340);
+		wordCountValues.mockBean("надежда", 540);
+		wordCountValues.mockBean("любовь", 840);
+
+		for (Map.Entry<String, Integer> entry : wordCountValues.getWordCountMap().entrySet()) {
+			sb.append(entry.getKey() + ", ");
+			sb.append(entry.getValue() + "\n");
 		}
 
 		return sb == null || sb.length()<1 ? "Bad Responce" : sb.toString();
 	}
 
-	class Gist {
-		Map<String, GistFile> files;
+	class WordCountValues {
+
+		Map<String, Integer> wordCountMap;
+
+		public void mockBean(String key, Integer value) {
+			if (wordCountMap == null) {
+				wordCountMap = new HashMap<String, Integer>();
+			}
+			wordCountMap.put(key, value);
+		}
+
+		public Map<String, Integer> getWordCountMap() {
+			return wordCountMap;
+		}
 	}
 
-	class GistFile {
-		String content;
-	}
 }

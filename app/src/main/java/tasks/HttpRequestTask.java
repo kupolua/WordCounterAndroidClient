@@ -41,10 +41,10 @@ public class HttpRequestTask<T extends Activity> extends AsyncTask<T, Void, Gree
 
 	@Override
 	protected void onPostExecute(Greeting greeting) {
-		TextView greetingIdText = (TextView) activity.findViewById(R.id.id_value);
-		TextView greetingContentText = (TextView) activity.findViewById(R.id.content_value);
-		greetingIdText.setText(greeting.getId());
-		greetingContentText.setText(greeting.getContent());
+//		TextView greetingIdText = (TextView) activity.findViewById(R.id.id_value);
+//		TextView greetingContentText = (TextView) activity.findViewById(R.id.content_value);
+//		greetingIdText.setText(greeting.getId());
+//		greetingContentText.setText(greeting.getContent());
 	}
 
 }
