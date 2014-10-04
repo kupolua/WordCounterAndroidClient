@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
@@ -56,14 +57,13 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-//		new WordCountRequestTask<MainActivity>().execute(this);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_refresh) {
-			new WordCountRequestTask<MainActivity>().execute(this);
+			clearResult();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -71,6 +71,11 @@ public class MainActivity extends ActionBarActivity {
 
 	private void getResult() {
 		new WordCountRequestTask<MainActivity>().execute(this);
+	}
+
+	private void clearResult() {
+		TextView resultText = (TextView) findViewById(R.id.resultText);
+		resultText.setText("");
 	}
 
 }
