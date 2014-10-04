@@ -123,6 +123,31 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 		wordCountValues.mockBean("вера", 340);
 		wordCountValues.mockBean("надежда", 540);
 		wordCountValues.mockBean("любовь", 840);
+		wordCountValues.mockBean("сок", 340);
+		wordCountValues.mockBean("фрукт", 540);
+		wordCountValues.mockBean("пакет", 840);
+		wordCountValues.mockBean("машина", 340);
+		wordCountValues.mockBean("одежда", 540);
+		wordCountValues.mockBean("носок", 840);
+		wordCountValues.mockBean("тетрадь", 340);
+		wordCountValues.mockBean("пульт", 540);
+		wordCountValues.mockBean("мак", 840);
+		wordCountValues.mockBean("пс", 340);
+		wordCountValues.mockBean("лук", 540);
+		wordCountValues.mockBean("муж", 840);
+		wordCountValues.mockBean("жена", 340);
+		wordCountValues.mockBean("свет", 540);
+		wordCountValues.mockBean("страна", 840);
+		wordCountValues.mockBean("воск", 340);
+		wordCountValues.mockBean("блабла", 540);
+		wordCountValues.mockBean("ойляля", 840);
+		wordCountValues.mockBean("куку", 340);
+		wordCountValues.mockBean("таксешно", 540);
+		wordCountValues.mockBean("дела", 840);
+		wordCountValues.mockBean("милость", 340);
+		wordCountValues.mockBean("благодать", 540);
+		wordCountValues.mockBean("отступ", 840);
+
 
 		for (Map.Entry<String, Integer> entry : wordCountValues.getWordCountMap().entrySet()) {
 			sb.append(entry.getKey() + ", ");
