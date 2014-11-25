@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
 	    });
 
 	    /**
-	     * Prevent the use of hardware Settings icon
+	     * Prevent the use of hardware Settings icon.
 	     */
 	    try {
 		    ViewConfiguration config = ViewConfiguration.get(this);
