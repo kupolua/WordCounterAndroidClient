@@ -123,7 +123,7 @@ public class RestHttpClientTest {
 
 		@Override
 		public String toString() {
-			return "WordCounterResponse{" +
+			return "WordCounterResultContainerImpl{" +
 					"countedResult=" + countedResult +
 					'}';
 		}
