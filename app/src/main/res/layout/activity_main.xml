@@ -57,14 +57,46 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:text="Your result will appear here"
-            android:id="@+id/resultText"
-            android:layout_toRightOf="@+id/textView"/>
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:background="#eeeeee"
+            android:stretchColumns="*"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
+            <TableRow
+                android:background="#cccccc"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Word"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Count"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+            </TableRow>
+
+            <TableRow android:padding="5dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/resultWord"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/resultCount"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
+        </TableLayout>
     </ScrollView>
 
 </RelativeLayout>
