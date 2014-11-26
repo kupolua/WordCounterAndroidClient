@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qalight.javacourse.wordcounterandroidclient.R;
+import com.qalight.javacourse.wordcounterandroidclient.WordResultSorter;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -29,15 +30,16 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
     private T activity;
     private static final long SECOND = 1000;
     private final long DEFAULT_TIMEOUT = 30 * SECOND;
-    private static final int PORT = 8080;
-//    private static final int PORT = 8008;
+    //    private static final int PORT = 8080;
+    private static final int PORT = 8008;
     private static final String PARAM_NAME = "textCount";
-    private static final String SERVER_NAME = "http://localhost:";
-//    private static final String SERVER_NAME = "http://95.158.60.148:";
+    //    private static final String SERVER_NAME = "http://localhost:";
+    private static final String SERVER_NAME = "http://95.158.60.148:";
     private static final String CONTEXT = "/WordCounter/";
     private static final String COUNT_REQUEST = "countWordsRestStyle";
     private static final String COUNT_URL = SERVER_NAME + PORT + CONTEXT + COUNT_REQUEST;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public static final String DEFAULT_SORTING_PARAM = "VALUE_DESCENDING";
     private OkHttpClient client;
 
     @Override
@@ -70,6 +72,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
                 .add(PARAM_NAME, requestedValue)
                 .build();
         final Request request = new Request.Builder()
+                .header("Accept-Language", "en-EN,en;q=0.5")
                 .url(COUNT_URL)
                 .post(formBody)
                 .build();
@@ -93,7 +96,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
         JSONObject reader = new JSONObject(resultStr);
         JSONObject countedResult  = reader.getJSONObject("countedResult");
-        Log.d("countedResult= ", countedResult.toString());
+//        Log.d("countedResult= ", countedResult.toString());
 
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         Iterator<?> keys = countedResult.keys();
@@ -102,10 +105,13 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
             String key = (String)keys.next();
             int value = countedResult.getInt(key);
             map.put(key, value);
-            Log.d("key=" + key, "value=" + value);
+//            Log.d("key=" + key, "value=" + value);
         }
 
-        return map.toString();
+        WordResultSorter sorter = WordResultSorter.VALUE_DESCENDING;
+        Map<String, Integer> sortedRefinedCountedWords = sorter.getSortedWords(map);
+
+        return sortedRefinedCountedWords.toString();
 //
 //        if (!response.isSuccessful()) {
 //            createFailMessage(requestedValue);
