@@ -1,5 +1,6 @@
 package com.qalight.javacourse.wordcounterandroidclient;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
@@ -24,6 +26,13 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+
+        EditText editText = (EditText) findViewById(R.id.inputText);
+        editText.setText(sharedText);
+
 
 	    Button buttonOk = (Button) findViewById(R.id.buttonOk);
 	    buttonOk.setOnClickListener(new View.OnClickListener() {
