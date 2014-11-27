@@ -35,4 +35,5 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     /*compile 'commons-httpclient:commons-httpclient:3.1'*/
     compile 'com.google.code.gson:gson:2.3'
+    compile 'com.android.support:appcompat-v7:20.+'
 }
