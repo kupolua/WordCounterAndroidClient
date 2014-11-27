@@ -88,69 +88,14 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
 		Response response = client.newCall(request).execute();
 
-		WordCounterResponse wordCounterResponse=null;
+        String resultStr = null;
 
 		if (!response.isSuccessful()) {
 			createFailMessage(requestedValue);
 		} else {
-			String resultStr = response.body().string();
-			ObjectMapper objectMapper = new ObjectMapper();
-			wordCounterResponse = objectMapper.readValue(resultStr, WordCounterResponse.class);
-
+			resultStr = response.body().string();
 		}
 
-		return wordCounterResponse.toString();
+		return resultStr;
 	}
-
-	static final class WordCounterResponse{
-		private final Map<String, Integer> countedResult;
-
-		public WordCounterResponse() {
-			countedResult = new HashMap<String, Integer>();
-		}
-
-		public WordCounterResponse(Map<String, Integer> countedResult) {
-			this.countedResult = countedResult;
-		}
-
-		public Map<String, Integer> getCountedResult() {
-			return countedResult;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
-
-			WordCounterResponse that = (WordCounterResponse) o;
-
-			if (!countedResult.equals(that.countedResult)) return false;
-
-			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			return countedResult.hashCode();
-		}
-
-		/*@Override
-		public String toString() {
-			return "WordCounterResponse{" +
-					"countedResult=" + countedResult +
-					'}';
-		}*/
-
-
-		@Override
-		public String toString() {
-			StringBuilder sb = new StringBuilder();
-			for (Map.Entry<String, Integer> entry : countedResult.entrySet()) {
-				sb.append(entry.getKey() + ", ");
-				sb.append(entry.getValue() + "\n");
-			}
-			return sb.toString();
-		}
-	}
-
 }
