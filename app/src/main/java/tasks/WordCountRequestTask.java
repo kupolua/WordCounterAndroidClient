@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,13 +19,14 @@ import com.squareup.okhttp.Response;
 
 import junit.framework.Assert;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by apple on 9/15/14.
- */
 public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void, String> {
 
 	private T activity;
@@ -62,6 +64,34 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 	protected void onPostExecute(String parsedTextResult) {
 		TextView resultText = (TextView) activity.findViewById(R.id.resultText);
 		resultText.setText(parsedTextResult);
+
+        JSONObject reader;
+        JSONObject countedResult = null;
+        try {
+            reader = new JSONObject(parsedTextResult);
+            countedResult = reader.getJSONObject("countedResult");
+            Iterator<?> keys = countedResult.keys();
+
+            while( keys.hasNext() ){
+                String key = (String)keys.next();
+                int value = countedResult.getInt(key);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//
+//        TableRow tableRow = (TableRow) activity.findViewById(R.id.tableRow2);
+//
+//        TextView txt1 = new TextView(activity);
+//        TextView txt2 = new TextView(activity);
+//
+//        txt1.setText("one");
+//        txt2.setText("2");
+//
+//        tableRow.addView(txt1);
+//        tableRow.addView(txt2);
 	}
 
 	public Request buildRequestWithParamValue(String requestedValue) {
@@ -95,7 +125,6 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 		} else {
 			resultStr = response.body().string();
 		}
-
 		return resultStr;
 	}
 }

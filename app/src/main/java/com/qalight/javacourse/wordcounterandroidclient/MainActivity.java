@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
-import tasks.HttpRequestTask;
 import tasks.WordCountRequestTask;
-
 
 public class MainActivity extends ActionBarActivity {
 
