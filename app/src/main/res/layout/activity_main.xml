@@ -40,7 +40,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"
+        android:text="Count words"
         android:id="@+id/buttonOk"
         android:layout_alignEnd="@+id/textAreaScroller"
         android:layout_below="@+id/inputText"
@@ -70,13 +70,13 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Word"
+                    android:text="Word (sorting)"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Count"
+                    android:text="Count (sorting)"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
             </TableRow>
 
@@ -97,6 +97,14 @@
             </TableRow>
         </TableLayout>
     </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter dsfasdfasdf "
+        android:id="@+id/button"
+        android:layout_below="@+id/inputText"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>
 
