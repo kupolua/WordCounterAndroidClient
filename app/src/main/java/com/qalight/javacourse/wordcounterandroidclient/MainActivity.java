@@ -1,88 +1,114 @@
 package com.qalight.javacourse.wordcounterandroidclient;
 
-import android.content.Intent;
+
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewConfiguration;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.support.v4.widget.DrawerLayout;
 
-import java.lang.reflect.Field;
+public class MainActivity extends ActionBarActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-import tasks.WordCountRequestTask;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-public class MainActivity extends ActionBarActivity {
+    /**
+     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     */
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
-	private static final String TAG = MainActivity.class.getSimpleName();
+    /**
+     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     */
+    private CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
 
-        EditText editText = (EditText) findViewById(R.id.inputText);
-        editText.setText(sharedText);
-
-
-	    Button buttonOk = (Button) findViewById(R.id.buttonOk);
-	    buttonOk.setOnClickListener(new View.OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-			    getResult();
-		    }
-	    });
-
-	    /**
-	     * Prevent the use of hardware Settings icon.
-	     */
-	    try {
-		    ViewConfiguration config = ViewConfiguration.get(this);
-		    Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-		    if(menuKeyField != null) {
-			    menuKeyField.setAccessible(true);
-			    menuKeyField.setBoolean(config, false);
-		    }
-	    } catch (Exception ex) {
-		    Log.d(TAG, ex.getLocalizedMessage());
-	    }
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .commit();
+    }
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-	}
+    public void setTitle(CharSequence title){
+        mTitle = title;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_refresh) {
-			clearResult();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
 
-	private void getResult() {
-		new WordCountRequestTask<MainActivity>().execute(this);
-	}
 
-	private void clearResult() {
-		TextView resultText = (TextView) findViewById(R.id.resultText);
-		resultText.setText("");
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar.
+            getMenuInflater().inflate(R.menu.main, menu);
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static Fragment newInstance(int sectionNumber) {
+            Fragment fragment = new HomeFragment();
+
+            switch (sectionNumber) {
+                case 1:
+                    fragment = new HomeFragment();
+                    break;
+                case 2:
+                    fragment = new AboutFragment();
+                    break;
+            }
+
+            return fragment;
+        }
+
+        public PlaceholderFragment() {
+        }
+    }
 }

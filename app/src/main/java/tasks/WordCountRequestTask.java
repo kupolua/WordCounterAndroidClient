@@ -3,12 +3,12 @@ package tasks;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.qalight.javacourse.wordcounterandroidclient.R;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
@@ -16,19 +16,13 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-
-import junit.framework.Assert;
-
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void, String> {
 
+    private static final String TAG = WordCountRequestTask.class.getSimpleName();
 	private T activity;
 	private static final long SECOND = 1000;
 	private final long DEFAULT_TIMEOUT = 30 * SECOND;
@@ -36,7 +30,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 	private static final String PARAM_NAME = "textCount";
 	private static final String SERVER_NAME = "http://95.158.60.148:";
 	private static final String CONTEXT = "/WordCounter/";
-	private static final String COUNT_REQUEST = "countWordsRestStyle";
+	private static final String COUNT_REQUEST = "countWords";
 	private static final String COUNT_URL = SERVER_NAME + PORT + CONTEXT + COUNT_REQUEST;
 	public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 	private OkHttpClient client;
@@ -62,9 +56,6 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
 	@Override
 	protected void onPostExecute(String parsedTextResult) {
-		TextView resultText = (TextView) activity.findViewById(R.id.resultText);
-		resultText.setText(parsedTextResult);
-
         JSONObject reader;
         JSONObject countedResult = null;
         try {
@@ -72,26 +63,37 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
             countedResult = reader.getJSONObject("countedResult");
             Iterator<?> keys = countedResult.keys();
 
+            TableLayout tableLayout = (TableLayout) activity.findViewById(R.id.resultTable);
+            tableLayout.removeAllViews();
+
+            Button sortBtnWord = new Button(activity);
+            Button sortBtnCount = new Button(activity);
+
+            sortBtnWord.setText("Word");
+            sortBtnCount.setText("Count");
+
+            TableRow tableRow = new TableRow(activity);
+            tableRow.addView(sortBtnWord);
+            tableRow.addView(sortBtnCount);
+            tableLayout.addView(tableRow);
+
             while( keys.hasNext() ){
                 String key = (String)keys.next();
-                int value = countedResult.getInt(key);
+
+                TextView txt1 = new TextView(activity);
+                TextView txt2 = new TextView(activity);
+
+                txt1.setText(key);
+                txt2.setText(countedResult.getString(key));
+                tableRow = new TableRow(activity);
+                tableRow.addView(txt1);
+                tableRow.addView(txt2);
+                tableLayout.addView(tableRow);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//
-//        TableRow tableRow = (TableRow) activity.findViewById(R.id.tableRow2);
-//
-//        TextView txt1 = new TextView(activity);
-//        TextView txt2 = new TextView(activity);
-//
-//        txt1.setText("one");
-//        txt2.setText("2");
-//
-//        tableRow.addView(txt1);
-//        tableRow.addView(txt2);
 	}
 
 	public Request buildRequestWithParamValue(String requestedValue) {
@@ -127,4 +129,6 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 		}
 		return resultStr;
 	}
+
+
 }
