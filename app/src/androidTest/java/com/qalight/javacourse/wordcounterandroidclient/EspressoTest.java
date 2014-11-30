@@ -1,6 +1,5 @@
 package com.qalight.javacourse.wordcounterandroidclient;
 
-
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.test.ActivityInstrumentationTestCase2;

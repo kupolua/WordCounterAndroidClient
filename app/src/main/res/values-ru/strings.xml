@@ -19,10 +19,10 @@
     <string name="button_filter">Фильтровать</string>
     <string name="error_no_connection">Нет интернет подключения</string>
     <string name="error_no_text">Заполните поле для текста</string>
-    <string name="table_head_count">Количество</string>
+    <string name="table_head_count">Кол-во</string>
     <string name="table_head_word">Слово</string>
     <string name="table_head_word_down">Слово ↓</string>
     <string name="table_head_word_up">Слово ↑</string>
-    <string name="table_head_count_down">Количество ↓</string>
-    <string name="table_head_count_up">Количество ↑</string>
+    <string name="table_head_count_down">Кол-во ↓</string>
+    <string name="table_head_count_up">Кол-во ↑</string>
 </resources>
