@@ -3,8 +3,8 @@
 
     <string name="app_name">"WordCounter"</string>
     <string name="about_title">"About us"</string>
-    <string name="example_title">"Simply put a URL or a text into the form below, press “Count words” and the result will immediately appear just under the text box."</string>
-    <string name="example_text">"For Example:\nIf you want your request to be processed as a URL, please add http:// prefix to it.\nOtherwise it will be handled as a plain text."</string>
+    <string name="example_title">"Get most used words!"</string>
+    <string name="input_field_text">"If you want your request to be processed as a URL, please add http:// prefix to it. Otherwise it will be handled as a plain text."</string>
     <string name="id_label">The ID is</string>
     <string name="id_value">[id]</string>
     <string name="content_label">The Content is</string>

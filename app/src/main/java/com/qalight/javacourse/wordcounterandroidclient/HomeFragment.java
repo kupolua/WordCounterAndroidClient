@@ -53,6 +53,9 @@ public class HomeFragment  extends Fragment {
     }
 
     private void getResult() {
-        new WordCountRequestTask<MainActivity>().execute((MainActivity) getActivity());
+        EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
+        WordCountRequestTask<MainActivity> wkrt = new WordCountRequestTask<MainActivity>();
+        wkrt.setRequestText(inputView.getEditableText().toString());
+        wkrt.execute((MainActivity) getActivity());
     }
 }
