@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     private ProgressBar spinner;
+    private Map<String, Integer> countedResult;
 
     public HomeFragment() {
     }
@@ -84,7 +85,8 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         }
 
         if (wkrt.hasResult()) {
-            showResult(wkrt.getCountedResult());
+            countedResult = wkrt.getCountedResult();
+            showResult(countedResult);
         }
 
         spinner.setVisibility(View.GONE);
