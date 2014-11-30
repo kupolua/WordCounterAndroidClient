@@ -239,6 +239,4 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
             ((ArrayAdapter<String>) lvMain.getAdapter()).clear();
         }
     }
-
-
 }
