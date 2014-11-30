@@ -18,4 +18,6 @@
     <string name="table_head_word_up">Слово ↑</string>
     <string name="table_head_count_up">Кількість ↑</string>
     <string name="table_head_count_down">Кількість ↓</string>
+    <string name="error_no_connection">Відсутнє інтернет підключення</string>
+    <string name="error_no_text">Заповніть поле для тексту</string>
 </resources>
