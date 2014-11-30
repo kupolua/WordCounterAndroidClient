@@ -129,19 +129,19 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         String wordBtnText = "Word";
         String countBtnText = "Count";
 
-        if (sortingOrder.equals(VALUE_DESCENDING)){
+        if (sortingOrder.equals(VALUE_DESCENDING)) {
             countBtnText += " ↓";
         }
 
-        if (sortingOrder.equals(VALUE_ASCENDING)){
+        if (sortingOrder.equals(VALUE_ASCENDING)) {
             countBtnText += " ↑";
         }
 
-        if (sortingOrder.equals(KEY_DESCENDING)){
+        if (sortingOrder.equals(KEY_DESCENDING)) {
             wordBtnText += " ↓";
         }
 
-        if (sortingOrder.equals(KEY_ASCENDING)){
+        if (sortingOrder.equals(KEY_ASCENDING)) {
             wordBtnText += " ↑";
         }
 
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
             public void onClick(View v) {
                 Log.d(TAG, "Click sortBtnCount");
                 WordResultSorter sorter;
-                if (sortingOrder.equals(VALUE_ASCENDING)){
+                if (sortingOrder.equals(VALUE_ASCENDING)) {
                     sorter = WordResultSorter.VALUE_DESCENDING;
                     sortingOrder = VALUE_DESCENDING;
                 } else {
@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
             public void onClick(View v) {
                 Log.d(TAG, "Click sortBtnCount");
                 WordResultSorter sorter;
-                if (sortingOrder.equals(KEY_ASCENDING)){
+                if (sortingOrder.equals(KEY_ASCENDING)) {
                     sorter = WordResultSorter.KEY_DESCENDING;
                     sortingOrder = KEY_DESCENDING;
                 } else {
@@ -180,20 +180,6 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
                 showResult(sortedRefinedCountedWords);
             }
         });
-
-        sortBtnCount.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WordResultSorter sorter = WordResultSorter.VALUE_DESCENDING;
-                if (sortingOrder.equals(VALUE_ASCENDING)){
-                    sorter = WordResultSorter.VALUE_ASCENDING;
-                }
-
-                Map<String, Integer> sortedRefinedCountedWords = sorter.getSortedWords(countedResult);
-                showResult(sortedRefinedCountedWords);
-            }
-        });
-
 
         sortBtnWord.setText(wordBtnText);
         sortBtnCount.setText(countBtnText);
