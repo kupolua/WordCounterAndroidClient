@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/errorList"
-        android:layout_below="@+id/buttonFilter" />
+        android:layout_below="@+id/buttonOk" />
 
     <ScrollView android:id="@+id/textAreaScroller"
         android:layout_width="match_parent"

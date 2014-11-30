@@ -10,4 +10,8 @@
     <string name="input_field_text">"Якщо Ви хочете, щоб запит був оброблений як URL, будь ласка, додайте на початку http://"</string>
     <string name="title_about">Про програму</string>
     <string name="title_home">Головна</string>
+    <string name="button_off_filter">Фільтр відключено</string>
+    <string name="button_on_filter">Фільтрувати</string>
+    <string name="table_head_words">Слово</string>
+    <string name="table_head_counts">Кількість</string>
 </resources>

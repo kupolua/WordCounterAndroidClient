@@ -16,4 +16,7 @@
     <string name="button_on_filter">Фильтровать</string>
     <string name="button_off_filter">Фильтр отключен</string>
     <string name="button_countwords">Посчитать слова</string>
+    <string name="button_filter">Фильтровать</string>
+    <string name="table_head_words">Слово</string>
+    <string name="table_head_counts">Количество</string>
 </resources>
