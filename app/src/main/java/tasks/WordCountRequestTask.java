@@ -48,10 +48,9 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
     public static final String LANGUAGE_RU = "ru";
     public static final String LANGUAGE_UK = "uk";
 
-
     private static final String SERVER_NAME = "http://95.158.60.148:";
     private static final String CONTEXT = "/WordCounter/";
-    private static final String COUNT_REQUEST = "countWords";
+    private static final String COUNT_REQUEST = "countWordsWithParams";
     private static final String COUNT_URL = SERVER_NAME + PORT + CONTEXT + COUNT_REQUEST;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
