@@ -94,6 +94,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
     @Override
     protected void onPostExecute(String parsedTextResult) {
+        Log.d(TAG, parsedTextResult);
         JSONObject reader;
         JSONObject countedResult = null;
         try {
@@ -124,7 +125,6 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
             if (sortingOrder.equals(KEY_ASCENDING)) {
                 wordBtnText += " ↑";
             }
-
 
             sortBtnWord.setText(wordBtnText);
             sortBtnCount.setText(countBtnText);
@@ -172,7 +172,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
             while( keys.hasNext() ){
                 String key = (String)keys.next();
-
+                Log.d(TAG, key);
                 TextView txt1 = new TextView(activity);
                 TextView txt2 = new TextView(activity);
 
@@ -198,12 +198,13 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
                 .add(PARAM_SORTING_ORDER, requestedSortingOrder)
                 .add(PARAM_IS_FILTER_WORDS, requestedIsFilterWords)
                 .build();
-        Log.d(TAG, requestedSortingOrder);
+
         final Request request = new Request.Builder()
                 .header(PARAM_LANGUAGE, requestedLanguageParam)
                 .url(COUNT_URL)
                 .post(formBody)
                 .build();
+
         return request;
     }
 
