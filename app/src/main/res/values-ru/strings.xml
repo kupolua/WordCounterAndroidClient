@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">"WordCounter"</string>
     <string name="about_title">"O нас"</string>
-    <string name="example_title">"Get most used words!"</string>
-    <string name="input_field_text">"Если вы хотите, чтобы ваш запрос будет обработан в URL, пожалуйста, добавьте префикс -http: // к нему."</string>
+    <string name="example_title">"Получить статистику частоты употребления слов!"</string>
+    <string name="input_field_text">"Если Вы хотите, чтобы Ваш запрос был обработан как URL, пожалуйста, добавьте вначале http://"</string>
     <string name="id_label">The ID is</string>
     <string name="id_value">[id]</string>
     <string name="content_label">The Content is</string>
     <string name="content_value">[content]</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="title_about">About</string>
+    <string name="title_about">О программе</string>
     <string name="action_refresh">Обновить</string>
     <string name="title_home">Главная</string>
-
+    <string name="button_filter">Фильтровать</string>
+    <string name="button_countwords">Посчитать слова</string>
 </resources>
