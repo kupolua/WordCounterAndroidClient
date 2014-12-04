@@ -3,7 +3,7 @@
     <string name="app_name">"WordCounter"</string>
     <string name="about_title">"O нас"</string>
     <string name="example_title">"Получить статистику частоты употребления слов!"</string>
-    <string name="input_field_text">"Если Вы хотите, чтобы Ваш запрос был обработан как URL, пожалуйста, добавьте вначале http://"</string>
+    <string name="input_field_text">"Если Вы хотите, чтобы запрос был обработан как URL, пожалуйста, добавьте вначале http://"</string>
     <string name="id_label">The ID is</string>
     <string name="id_value">[id]</string>
     <string name="content_label">The Content is</string>
