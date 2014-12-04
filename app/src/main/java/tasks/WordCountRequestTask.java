@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void, String> {
 
@@ -241,7 +242,9 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
         client = new OkHttpClient();
 
-        Request request = buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, LANGUAGE_DEFAULT_EN);
+        String locale = Locale.getDefault().getLanguage();
+
+        Request request = buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, locale);
 
         Response response = client.newCall(request).execute();
 
