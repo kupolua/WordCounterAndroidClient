@@ -42,10 +42,16 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/errorList"
+        android:layout_below="@+id/button" />
+
     <ScrollView android:id="@+id/textAreaScroller"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/buttonOk"
+        android:layout_below="@+id/errorList"
         android:scrollbars="vertical"
         android:fillViewport="false"
         android:layout_alignParentRight="true"
@@ -68,5 +74,7 @@
         android:id="@+id/button"
         android:layout_below="@+id/inputText"
         android:layout_alignParentLeft="true" />
+
+
 
 </RelativeLayout>

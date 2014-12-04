@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,9 +21,13 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void, String> {
 
@@ -95,10 +101,28 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
     @Override
     protected void onPostExecute(String parsedTextResult) {
         Log.d(TAG, parsedTextResult);
+
         JSONObject reader;
         JSONObject countedResult = null;
+        JSONArray errorResult = null;
         try {
             reader = new JSONObject(parsedTextResult);
+            errorResult = reader.getJSONArray("errors");
+
+            List<String> list = new ArrayList<String>();
+            for(int i = 0; i < errorResult.length(); i++){
+                list.add(errorResult.getString(i));
+            }
+
+            ListView lvMain = (ListView) activity.findViewById(R.id.errorList);
+
+            // создаем адаптер
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
+                    R.layout.error_list_item, list);
+
+            // присваиваем адаптер списку
+            lvMain.setAdapter(adapter);
+
             countedResult = reader.getJSONObject("countedResult");
             Iterator<?> keys = countedResult.keys();
 
