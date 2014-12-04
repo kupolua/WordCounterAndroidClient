@@ -36,7 +36,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Count words"
+        android:text="@string/button_countwords"
         android:id="@+id/buttonOk"
         android:layout_below="@+id/inputText"
         android:layout_alignParentRight="true"
@@ -64,7 +64,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Filter"
+        android:text="@string/button_filter"
         android:id="@+id/button"
         android:layout_below="@+id/inputText"
         android:layout_alignParentLeft="true" />
