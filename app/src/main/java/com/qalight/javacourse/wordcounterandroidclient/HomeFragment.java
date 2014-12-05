@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ import tasks.WordCountRequestTask;
 
 public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
+
+    private ProgressBar spinner;
 
     public HomeFragment() {
     }
@@ -58,6 +61,9 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
 
         Button buttonOk = (Button) getActivity().findViewById(R.id.buttonOk);
         buttonOk.setOnClickListener(this);
+
+        spinner = (ProgressBar) getActivity().findViewById(R.id.spinner);
+        spinner.setVisibility(View.GONE);
     }
 
     @Override
@@ -67,6 +73,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
 
     @Override
     public void startExecute(WordCountRequestTask wkrt) {
+        spinner.setVisibility(View.VISIBLE);
         hideError();
     }
 
@@ -79,6 +86,8 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         if (wkrt.hasResult()) {
             showResult(wkrt.getCountedResult());
         }
+
+        spinner.setVisibility(View.GONE);
     }
 
     private void sendRequest() {
