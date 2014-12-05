@@ -65,6 +65,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
     JSONObject countedResult = null;
     JSONArray errorResult = null;
+    private Map<String, Integer> resultsMap;
 
     public void setRequestText(String val) {
         requestText = val;
@@ -111,6 +112,8 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
             e.printStackTrace();
         }
 
+        setCountedResult();
+
         fragment.finishExecute(this);
     }
 
@@ -131,7 +134,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         return list;
     }
 
-    public Map<String, Integer> getCountedResult() {
+    public void setCountedResult() {
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         Iterator<?> keys = countedResult.keys();
         try {
@@ -143,8 +146,11 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         } catch (Exception e) {
             e.printStackTrace();
         }
+        resultsMap = map;
+    }
 
-        return map;
+    public Map<String, Integer> getCountedResult() {
+        return this.resultsMap;
     }
 
     public Request buildCountRequestWithAllParams(String requestedValue,
