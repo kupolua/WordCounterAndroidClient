@@ -1,22 +1,9 @@
 package tasks;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-import com.qalight.javacourse.wordcounterandroidclient.MainActivity;
-import com.qalight.javacourse.wordcounterandroidclient.R;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -25,7 +12,6 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -35,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Locale;
 
 public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, String> {
 
@@ -81,7 +66,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     JSONObject countedResult = null;
     JSONArray errorResult = null;
 
-
     public void setRequestText(String val) {
         requestText = val;
     }
@@ -93,7 +77,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     public void setIsFilterWords(String val) {
         isFilterWords = val;
     }
-
 
     @Override
     protected String doInBackground(RequestInFragment... params) {
@@ -162,22 +145,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         }
 
         return map;
-    }
-
-    private void showError(JSONArray errorResult) throws JSONException {
-        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < errorResult.length(); i++) {
-            list.add(errorResult.getString(i));
-        }
-
-        ListView lvMain = (ListView) activity.findViewById(R.id.errorList);
-
-        // создаем адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
-                R.layout.error_list_item, list);
-
-        // присваиваем адаптер списку
-        lvMain.setAdapter(adapter);
     }
 
     public Request buildCountRequestWithAllParams(String requestedValue,
