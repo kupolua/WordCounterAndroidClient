@@ -13,6 +13,7 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="title_home">Home</string>
     <string name="title_about">About</string>
-    <string name="button_filter">Filter</string>
+    <string name="button_on_filter">Filter</string>
+    <string name="button_off_filter">Filter Off</string>
     <string name="button_countwords">Count words</string>
 </resources>

@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/errorList"
-        android:layout_below="@+id/button" />
+        android:layout_below="@+id/buttonFilter" />
 
     <ScrollView android:id="@+id/textAreaScroller"
         android:layout_width="match_parent"
@@ -67,14 +67,14 @@
         </TableLayout>
     </ScrollView>
 
-    <Button
+
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_filter"
-        android:id="@+id/button"
-        android:layout_below="@+id/inputText"
-        android:layout_alignParentLeft="true" />
-
+        android:textOff="@string/button_off_filter"
+        android:textOn="@string/button_on_filter"
+        android:id="@+id/buttonFilter"
+        android:layout_below="@+id/inputText" />
 
 
 </RelativeLayout>

@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.qalight.javacourse.wordcounterandroidclient.MainActivity;
 import com.qalight.javacourse.wordcounterandroidclient.R;
@@ -23,6 +25,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,27 +110,32 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
         JSONArray errorResult = null;
         try {
             reader = new JSONObject(parsedTextResult);
+
             errorResult = reader.getJSONArray("errors");
-
-            List<String> list = new ArrayList<String>();
-            for(int i = 0; i < errorResult.length(); i++){
-                list.add(errorResult.getString(i));
+            if (errorResult.length() > 0){
+                showError(errorResult);
             }
-
-            ListView lvMain = (ListView) activity.findViewById(R.id.errorList);
-
-            // создаем адаптер
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
-                    R.layout.error_list_item, list);
-
-            // присваиваем адаптер списку
-            lvMain.setAdapter(adapter);
 
             countedResult = reader.getJSONObject("countedResult");
             Iterator<?> keys = countedResult.keys();
 
             TableLayout tableLayout = (TableLayout) activity.findViewById(R.id.resultTable);
             tableLayout.removeAllViews();
+
+            final ToggleButton filter = (ToggleButton) activity.findViewById(R.id.buttonFilter);
+
+            filter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    WordCountRequestTask<MainActivity> wkrt = new WordCountRequestTask<MainActivity>();
+                    if (isChecked) {
+                        wkrt.setIsFilterWords(TRUE);
+                    } else {
+                        wkrt.setIsFilterWords(FALSE);
+                    }
+                    wkrt.execute((MainActivity) activity);
+                }
+            });
 
             final TextView sortBtnWord = new TextView(activity);
             final TextView sortBtnCount = new TextView(activity);
@@ -156,7 +164,6 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
             sortBtnWord.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "Click sortBtnCount");
                     EditText inputView = (EditText) activity.findViewById(R.id.inputText);
                     WordCountRequestTask<MainActivity> wkrt = new WordCountRequestTask<MainActivity>();
                     wkrt.setRequestText(inputView.getEditableText().toString());
@@ -196,7 +203,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
             while( keys.hasNext() ){
                 String key = (String)keys.next();
-                Log.d(TAG, key);
+
                 TextView txt1 = new TextView(activity);
                 TextView txt2 = new TextView(activity);
 
@@ -211,6 +218,22 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showError(JSONArray errorResult) throws JSONException {
+        List<String> list = new ArrayList<String>();
+        for(int i = 0; i < errorResult.length(); i++){
+            list.add(errorResult.getString(i));
+        }
+
+        ListView lvMain = (ListView) activity.findViewById(R.id.errorList);
+
+        // создаем адаптер
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
+                R.layout.error_list_item, list);
+
+        // присваиваем адаптер списку
+        lvMain.setAdapter(adapter);
     }
 
     public Request buildCountRequestWithAllParams(String requestedValue,

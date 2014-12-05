@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 
-public class HomeFragment  extends Fragment {
+public class HomeFragment  extends Fragment implements RequestInFragment {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -57,5 +58,15 @@ public class HomeFragment  extends Fragment {
         WordCountRequestTask<MainActivity> wkrt = new WordCountRequestTask<MainActivity>();
         wkrt.setRequestText(inputView.getEditableText().toString());
         wkrt.execute((MainActivity) getActivity());
+    }
+
+    @Override
+    public void startExecute() {
+
+    }
+
+    @Override
+    public void finishExecute() {
+
     }
 }
