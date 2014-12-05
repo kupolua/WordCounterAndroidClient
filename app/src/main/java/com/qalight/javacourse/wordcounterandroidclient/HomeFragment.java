@@ -31,16 +31,14 @@ import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 
 public class HomeFragment  extends Fragment implements RequestInFragment, OnClickListener {
-
     private static final String TAG = HomeFragment.class.getSimpleName();
-
-
 
     public HomeFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -121,8 +119,7 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         tableRow.setPadding(5, 5, 5, 5);
         tableLayout.addView(tableRow);
 
-        for (Map.Entry<String, Integer> entry: countResult.entrySet())
-        {
+        for (Map.Entry<String, Integer> entry : countResult.entrySet()) {
             TextView txt1 = new TextView(getActivity());
             TextView txt2 = new TextView(getActivity());
 
@@ -150,22 +147,17 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         lvMain.setAdapter(adapter);
     }
 
-    private boolean hasConnection(Context context)
-    {
+    private boolean hasConnection(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
-        {
+        if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null)
                 for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
 
         }
         return false;
     }
-
-
 }

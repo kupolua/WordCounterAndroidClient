@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity
                 .commit();
     }
 
-    public void setTitle(CharSequence title){
+    public void setTitle(CharSequence title) {
         mTitle = title;
     }
 
@@ -59,7 +59,6 @@ public class MainActivity extends ActionBarActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
