@@ -19,4 +19,6 @@
     <string name="button_filter">Фильтровать</string>
     <string name="table_head_words">Слово</string>
     <string name="table_head_counts">Количество</string>
+    <string name="error_no_connection">Нет интернет подключения</string>
+    <string name="error_no_text">Заполните поле для текста</string>
 </resources>
