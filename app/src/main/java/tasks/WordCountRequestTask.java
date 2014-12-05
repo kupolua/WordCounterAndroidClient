@@ -67,6 +67,11 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     JSONArray errorResult = null;
     private Map<String, Integer> resultsMap;
 
+    public WordCountRequestTask(RequestInFragment _fragment) {
+        fragment = _fragment;
+        activity = fragment.getActivity();
+    }
+
     public void setRequestText(String val) {
         requestText = val;
     }
@@ -81,12 +86,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
     @Override
     protected String doInBackground(RequestInFragment... params) {
-
-        fragment = params[0];
-        activity = fragment.getActivity();
-
-        fragment.startExecute(this);
-
         try {
             return requestText == null || requestText.length() == 0 ? "" : post(requestText, sortingOrder, isFilterWords);
         } catch (Exception e) {
@@ -97,9 +96,14 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     }
 
     @Override
-    protected void onPostExecute(String parsedTextResult) {
-        super.onPostExecute(parsedTextResult);
+    protected void onPreExecute() {
+        super.onPreExecute();
 
+        fragment.startExecute(this);
+    }
+
+    @Override
+    protected void onPostExecute(String parsedTextResult) {
         Log.d(TAG, parsedTextResult);
 
         JSONObject reader;
@@ -118,7 +122,10 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     }
 
     public boolean hasError() {
-        return (errorResult.length() > 0);
+        if (errorResult != null)
+            return (errorResult.length() > 0);
+
+        return false;
     }
 
     public List<String> getErrorResult() {
@@ -132,6 +139,13 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         }
 
         return list;
+    }
+
+    public boolean hasResult() {
+        if (countedResult != null)
+            return (countedResult.length() > 0);
+
+        return false;
     }
 
     public void setCountedResult() {

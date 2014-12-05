@@ -8,21 +8,18 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.ToggleButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +27,7 @@ import java.util.Map;
 import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 
-public class HomeFragment  extends Fragment implements RequestInFragment, OnClickListener {
+public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     public HomeFragment() {
@@ -50,7 +47,7 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
         Intent intent = getActivity().getIntent();
@@ -61,17 +58,11 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
 
         Button buttonOk = (Button) getActivity().findViewById(R.id.buttonOk);
         buttonOk.setOnClickListener(this);
-
-        ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
-        filter.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         sendRequest();
-
-        ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
-        filter.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -81,18 +72,21 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
 
     @Override
     public void finishExecute(WordCountRequestTask wkrt) {
-        if (wkrt.hasError()){
+        if (wkrt.hasError()) {
             showError(wkrt.getErrorResult());
         }
 
-        showResult(wkrt.getCountedResult());
+        if (wkrt.hasResult()) {
+            showResult(wkrt.getCountedResult());
+        }
     }
 
     private void sendRequest() {
-        if (/*hasConnection(getActivity())*/ true) {
-            ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
+        if (hasConnection(getActivity())) {
+            CheckBox filter = (CheckBox) getActivity().findViewById(R.id.buttonFilter);
             EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
-            WordCountRequestTask wkrt = new WordCountRequestTask();
+
+            WordCountRequestTask wkrt = new WordCountRequestTask(this);
             if (filter.isChecked())
                 wkrt.setIsFilterWords(WordCountRequestTask.TRUE);
             wkrt.setRequestText(inputView.getEditableText().toString());
@@ -100,7 +94,7 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         }
     }
 
-    private void showResult(Map<String, Integer> countResult){
+    private void showResult(Map<String, Integer> countResult) {
         TableLayout tableLayout = (TableLayout) getActivity().findViewById(R.id.resultTable);
         tableLayout.removeAllViews();
 
@@ -132,14 +126,14 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         }
     }
 
-    private void hideError(){
+    private void hideError() {
         ListView lvMain = (ListView) getActivity().findViewById(R.id.errorList);
-        if (lvMain.getAdapter() != null && !lvMain.getAdapter().isEmpty()){
-            ((ArrayAdapter<String>)lvMain.getAdapter()).clear();
+        if (lvMain.getAdapter() != null && !lvMain.getAdapter().isEmpty()) {
+            ((ArrayAdapter<String>) lvMain.getAdapter()).clear();
         }
     }
 
-    private void showError(List<String> errorList){
+    private void showError(List<String> errorList) {
         ListView lvMain = (ListView) getActivity().findViewById(R.id.errorList);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),

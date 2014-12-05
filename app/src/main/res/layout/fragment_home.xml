@@ -67,12 +67,11 @@
         </TableLayout>
     </ScrollView>
 
+    <CheckBox
 
-    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="@string/button_off_filter"
-        android:textOn="@string/button_on_filter"
+        android:text="@string/button_on_filter"
         android:id="@+id/buttonFilter"
         android:layout_below="@+id/inputText" />
 
