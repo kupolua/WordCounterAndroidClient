@@ -1,22 +1,28 @@
 package com.qalight.javacourse.wordcounterandroidclient;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +30,7 @@ import java.util.Map;
 import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 
-public class HomeFragment  extends Fragment implements RequestInFragment {
+public class HomeFragment  extends Fragment implements RequestInFragment, OnClickListener {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -37,7 +43,12 @@ public class HomeFragment  extends Fragment implements RequestInFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ((MainActivity) activity).setTitle(R.string.title_home);
     }
 
     @Override
@@ -51,28 +62,18 @@ public class HomeFragment  extends Fragment implements RequestInFragment {
         editText.setText(sharedText);
 
         Button buttonOk = (Button) getActivity().findViewById(R.id.buttonOk);
-        buttonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Click buttonOk");
-                sendRequest();
-            }
-        });
+        buttonOk.setOnClickListener(this);
 
         ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Click filter");
-                sendRequest();
-            }
-        });
+        filter.setOnClickListener(this);
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).setTitle(R.string.title_home);
+    public void onClick(View v) {
+        sendRequest();
+
+        ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
+        filter.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -90,13 +91,15 @@ public class HomeFragment  extends Fragment implements RequestInFragment {
     }
 
     private void sendRequest() {
-        ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
-        EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
-        WordCountRequestTask wkrt = new WordCountRequestTask();
-        if (filter.isChecked())
-            wkrt.setIsFilterWords(WordCountRequestTask.TRUE);
-        wkrt.setRequestText(inputView.getEditableText().toString());
-        wkrt.execute(this);
+        if (/*hasConnection(getActivity())*/ true) {
+            ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
+            EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
+            WordCountRequestTask wkrt = new WordCountRequestTask();
+            if (filter.isChecked())
+                wkrt.setIsFilterWords(WordCountRequestTask.TRUE);
+            wkrt.setRequestText(inputView.getEditableText().toString());
+            wkrt.execute(this);
+        }
     }
 
     private void showResult(Map<String, Integer> countResult){
@@ -105,6 +108,11 @@ public class HomeFragment  extends Fragment implements RequestInFragment {
 
         final TextView sortBtnWord = new TextView(getActivity());
         final TextView sortBtnCount = new TextView(getActivity());
+
+        String wordBtnText = "Word";
+        String countBtnText = "Count";
+        sortBtnWord.setText(wordBtnText);
+        sortBtnCount.setText(countBtnText);
 
         TableRow tableRow = new TableRow(getActivity());
         tableRow.addView(sortBtnWord);
@@ -141,4 +149,23 @@ public class HomeFragment  extends Fragment implements RequestInFragment {
                 R.layout.error_list_item, errorList);
         lvMain.setAdapter(adapter);
     }
+
+    private boolean hasConnection(Context context)
+    {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
+        }
+        return false;
+    }
+
+
 }
