@@ -8,21 +8,18 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.ToggleButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +27,7 @@ import java.util.Map;
 import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 
-public class HomeFragment  extends Fragment implements RequestInFragment, OnClickListener {
+public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     public HomeFragment() {
@@ -61,22 +58,16 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
 
         Button buttonOk = (Button) getActivity().findViewById(R.id.buttonOk);
         buttonOk.setOnClickListener(this);
-
-        ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
-        filter.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         sendRequest();
-
-        ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
-        filter.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void startExecute(WordCountRequestTask wkrt) {
-          hideError();
+        hideError();
     }
 
     @Override
@@ -92,7 +83,7 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
 
     private void sendRequest() {
         if (hasConnection(getActivity())) {
-            ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
+            CheckBox filter = (CheckBox) getActivity().findViewById(R.id.buttonFilter);
             EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
 
             WordCountRequestTask wkrt = new WordCountRequestTask(this);

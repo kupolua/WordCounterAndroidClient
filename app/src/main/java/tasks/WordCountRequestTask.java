@@ -66,12 +66,12 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     JSONObject countedResult = null;
     JSONArray errorResult = null;
 
-    public WordCountRequestTask(RequestInFragment _fragment){
+    public WordCountRequestTask(RequestInFragment _fragment) {
         fragment = _fragment;
         activity = fragment.getActivity();
     }
-    
-    public void setRequestText(String val){
+
+    public void setRequestText(String val) {
         requestText = val;
     }
 
@@ -87,7 +87,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     @Override
     protected String doInBackground(RequestInFragment... params) {
         try {
-            return requestText == null || requestText.length()==0 ? "" : post(requestText, sortingOrder, isFilterWords);
+            return requestText == null || requestText.length() == 0 ? "" : post(requestText, sortingOrder, isFilterWords);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
         }
@@ -96,7 +96,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     }
 
     @Override
-    protected void onPreExecute(){
+    protected void onPreExecute() {
         super.onPreExecute();
 
         fragment.startExecute(this);
@@ -139,7 +139,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         return list;
     }
 
-    public boolean hasResult(){
+    public boolean hasResult() {
         if (countedResult != null)
             return (countedResult.length() > 0);
 
