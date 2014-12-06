@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/errorList"
-        android:layout_below="@+id/buttonFilter" />
+        android:layout_below="@+id/buttonOk" />
 
     <ScrollView android:id="@+id/textAreaScroller"
         android:layout_width="match_parent"
@@ -74,6 +74,13 @@
         android:text="@string/button_on_filter"
         android:id="@+id/buttonFilter"
         android:layout_below="@+id/inputText" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignTop="@+id/buttonFilter"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

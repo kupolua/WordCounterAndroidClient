@@ -16,6 +16,9 @@
     <string name="button_on_filter">Filter</string>
     <string name="button_off_filter">Filter Off</string>
     <string name="button_countwords">Count words</string>
+    <string name="button_filter">Filter</string>
+    <string name="table_head_words">Word</string>
+    <string name="table_head_counts">Count</string>
     <string name="error_no_connection">Not internet connection</string>
     <string name="error_no_text">Empty text</string>
 
