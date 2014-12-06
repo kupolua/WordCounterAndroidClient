@@ -30,16 +30,15 @@ import java.util.Map;
 import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 
-public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
-
+public class HomeFragment  extends Fragment implements RequestInFragment, OnClickListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
-
 
     public HomeFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -164,6 +163,4 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         }
         return false;
     }
-
-
 }

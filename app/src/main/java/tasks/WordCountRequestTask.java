@@ -1,22 +1,9 @@
 package tasks;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-import com.qalight.javacourse.wordcounterandroidclient.MainActivity;
-import com.qalight.javacourse.wordcounterandroidclient.R;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -25,8 +12,8 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,12 +21,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Locale;
 
 public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, String> {
 
     private static final String TAG = WordCountRequestTask.class.getSimpleName();
-  
+
     private static final long SECOND = 1000;
     private final long DEFAULT_TIMEOUT = 30 * SECOND;
     private static final int PORT = 8008;
@@ -84,18 +70,19 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         fragment = _fragment;
         activity = fragment.getActivity();
     }
-
+    
     public void setRequestText(String val){
         requestText = val;
     }
 
-    public void setSortingOrder(String val){
+    public void setSortingOrder(String val) {
         sortingOrder = val;
     }
 
-    public void setIsFilterWords(String val){
+    public void setIsFilterWords(String val) {
         isFilterWords = val;
     }
+
 
     @Override
     protected String doInBackground(RequestInFragment... params) {
@@ -125,16 +112,14 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
             errorResult = reader.getJSONArray("errors");
             countedResult = reader.getJSONObject("countedResult");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         fragment.finishExecute(this);
-        super.onPostExecute(parsedTextResult);
     }
 
-    public boolean hasError(){
+    public boolean hasError() {
         if (errorResult != null)
             return (errorResult.length() > 0);
 
@@ -144,7 +129,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     public List<String> getErrorResult() {
         List<String> list = new ArrayList<String>();
         try {
-            for(int i = 0; i < errorResult.length(); i++){
+            for (int i = 0; i < errorResult.length(); i++) {
                 list.add(errorResult.getString(i));
             }
         } catch (Exception e) {
@@ -165,8 +150,8 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         Iterator<?> keys = countedResult.keys();
         try {
-            while( keys.hasNext() ){
-                String key = (String)keys.next();
+            while (keys.hasNext()) {
+                String key = (String) keys.next();
                 int value = countedResult.getInt(key);
                 map.put(key, value);
             }
@@ -208,11 +193,9 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         String locale = Locale.getDefault().getLanguage();
 
         Request request = buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, locale);
-
         Response response = client.newCall(request).execute();
 
         String resultStr = null;
-
         if (!response.isSuccessful()) {
             createFailMessage(requestedValue);
         } else {
@@ -220,5 +203,4 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         }
         return resultStr;
     }
-
 }
