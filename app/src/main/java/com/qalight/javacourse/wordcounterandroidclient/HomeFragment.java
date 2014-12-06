@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -85,12 +86,17 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         if (hasConnection(getActivity())) {
             CheckBox filter = (CheckBox) getActivity().findViewById(R.id.buttonFilter);
             EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
-
-            WordCountRequestTask wkrt = new WordCountRequestTask(this);
-            if (filter.isChecked())
-                wkrt.setIsFilterWords(WordCountRequestTask.TRUE);
-            wkrt.setRequestText(inputView.getEditableText().toString());
-            wkrt.execute(this);
+            if (inputView.getEditableText().toString().length() > 0) {
+                WordCountRequestTask wkrt = new WordCountRequestTask(this);
+                if (filter.isChecked())
+                    wkrt.setIsFilterWords(WordCountRequestTask.TRUE);
+                wkrt.setRequestText(inputView.getEditableText().toString());
+                wkrt.execute(this);
+            } else {
+                Toast.makeText(getActivity(), R.string.error_no_text, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
         }
     }
 

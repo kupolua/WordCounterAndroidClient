@@ -16,4 +16,6 @@
     <string name="button_on_filter">Фильтровать</string>
     <string name="button_off_filter">Фильтр отключен</string>
     <string name="button_countwords">Посчитать слова</string>
+    <string name="error_no_connection">Нет интернет подключения</string>
+    <string name="error_no_text">Заполните поле для текста</string>
 </resources>
