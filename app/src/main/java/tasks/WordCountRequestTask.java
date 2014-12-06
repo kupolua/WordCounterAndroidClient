@@ -80,6 +80,10 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     JSONObject countedResult = null;
     JSONArray errorResult = null;
 
+    public WordCountRequestTask(RequestInFragment _fragment){
+        fragment = _fragment;
+        activity = fragment.getActivity();
+    }
 
     public void setRequestText(String val){
         requestText = val;
@@ -93,15 +97,8 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         isFilterWords = val;
     }
 
-
     @Override
     protected String doInBackground(RequestInFragment... params) {
-
-        fragment = params[0];
-        activity = fragment.getActivity();
-
-        fragment.startExecute(this);
-
         try {
             return requestText == null || requestText.length()==0 ? "" : post(requestText, sortingOrder, isFilterWords);
         } catch (Exception e) {
@@ -112,9 +109,14 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     }
 
     @Override
-    protected void onPostExecute(String parsedTextResult) {
-        super.onPostExecute(parsedTextResult);
+    protected void onPreExecute(){
+        super.onPreExecute();
 
+        fragment.startExecute(this);
+    }
+
+    @Override
+    protected void onPostExecute(String parsedTextResult) {
         Log.d(TAG, parsedTextResult);
 
         JSONObject reader;
@@ -123,116 +125,20 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
             errorResult = reader.getJSONArray("errors");
             countedResult = reader.getJSONObject("countedResult");
-            /*
-            Iterator<?> keys = countedResult.keys();
 
-            TableLayout tableLayout = (TableLayout) activity.findViewById(R.id.resultTable);
-            tableLayout.removeAllViews();
-*/
-            /*final ToggleButton filter = (ToggleButton) activity.findViewById(R.id.buttonFilter);
-
-            filter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    WordCountRequestTask wkrt = new WordCountRequestTask();
-                    if (isChecked) {
-                        wkrt.setIsFilterWords(TRUE);
-                    } else {
-                        wkrt.setIsFilterWords(FALSE);
-                    }
-                    //wkrt.execute((MainActivity) activity);
-                }
-            });*/
-/*
-            final TextView sortBtnWord = new TextView(activity);
-            final TextView sortBtnCount = new TextView(activity);
-
-            String wordBtnText = "Word";
-            String countBtnText = "Count";
-            if (sortingOrder.equals(VALUE_DESCENDING)) {
-                countBtnText += " ↓";
-            }
-
-            if (sortingOrder.equals(VALUE_ASCENDING)) {
-                countBtnText += " ↑";
-            }
-
-            if (sortingOrder.equals(KEY_DESCENDING)) {
-                wordBtnText += " ↓";
-            }
-
-            if (sortingOrder.equals(KEY_ASCENDING)) {
-                wordBtnText += " ↑";
-            }
-
-            sortBtnWord.setText(wordBtnText);
-            sortBtnCount.setText(countBtnText);
-
-            sortBtnWord.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EditText inputView = (EditText) activity.findViewById(R.id.inputText);
-                    WordCountRequestTask wkrt = new WordCountRequestTask();
-                    wkrt.setRequestText(inputView.getEditableText().toString());
-                    if (sortBtnWord.getText().equals("Word") || sortBtnWord.getText().equals("Word ↑")){
-                        wkrt.setSortingOrder(KEY_DESCENDING);
-                    } else {
-                        wkrt.setSortingOrder(KEY_ASCENDING);
-                    }
-                    sortBtnCount.setText("Count");
-                    //wkrt.execute((MainActivity) activity);
-                }
-            });
-
-            sortBtnCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Click sortBtnCount");
-                    EditText inputView = (EditText) activity.findViewById(R.id.inputText);
-                    WordCountRequestTask wkrt = new WordCountRequestTask();
-                    wkrt.setRequestText(inputView.getEditableText().toString());
-                    if (sortBtnCount.getText().equals("Count") || sortBtnCount.getText().equals("Count ↑")){
-                        wkrt.setSortingOrder(VALUE_DESCENDING);
-                    } else {
-                        wkrt.setSortingOrder(VALUE_ASCENDING);
-                    }
-                    sortBtnWord.setText("Word");
-                    //wkrt.execute((MainActivity) activity);
-                }
-            });
-
-            TableRow tableRow = new TableRow(activity);
-            tableRow.addView(sortBtnWord);
-            tableRow.addView(sortBtnCount);
-            tableRow.setBackgroundColor(Color.parseColor("#cccccc"));
-            tableRow.setPadding(5, 5, 5, 5);
-            tableLayout.addView(tableRow);
-
-            while( keys.hasNext() ){
-                String key = (String)keys.next();
-
-                TextView txt1 = new TextView(activity);
-                TextView txt2 = new TextView(activity);
-
-                txt1.setText(key);
-                txt2.setText(countedResult.getString(key));
-                tableRow = new TableRow(activity);
-                tableRow.addView(txt1);
-                tableRow.addView(txt2);
-                tableLayout.addView(tableRow);
-            }
-
-
-*/
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         fragment.finishExecute(this);
+        super.onPostExecute(parsedTextResult);
     }
 
     public boolean hasError(){
-        return (errorResult.length() > 0);
+        if (errorResult != null)
+            return (errorResult.length() > 0);
+
+        return false;
     }
 
     public List<String> getErrorResult() {
@@ -246,6 +152,13 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         }
 
         return list;
+    }
+
+    public boolean hasResult(){
+        if (countedResult != null)
+            return (countedResult.length() > 0);
+
+        return false;
     }
 
     public Map<String, Integer> getCountedResult() {
@@ -262,22 +175,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         }
 
         return map;
-    }
-
-    private void showError(JSONArray errorResult) throws JSONException {
-        List<String> list = new ArrayList<String>();
-        for(int i = 0; i < errorResult.length(); i++){
-            list.add(errorResult.getString(i));
-        }
-
-        ListView lvMain = (ListView) activity.findViewById(R.id.errorList);
-
-        // создаем адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
-                R.layout.error_list_item, list);
-
-        // присваиваем адаптер списку
-        lvMain.setAdapter(adapter);
     }
 
     public Request buildCountRequestWithAllParams(String requestedValue,

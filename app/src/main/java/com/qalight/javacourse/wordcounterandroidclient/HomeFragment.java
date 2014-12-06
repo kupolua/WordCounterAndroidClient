@@ -30,10 +30,9 @@ import java.util.Map;
 import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 
-public class HomeFragment  extends Fragment implements RequestInFragment, OnClickListener {
+public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
-
 
 
     public HomeFragment() {
@@ -52,7 +51,7 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
         Intent intent = getActivity().getIntent();
@@ -78,23 +77,26 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
 
     @Override
     public void startExecute(WordCountRequestTask wkrt) {
-        hideError();
+          hideError();
     }
 
     @Override
     public void finishExecute(WordCountRequestTask wkrt) {
-        if (wkrt.hasError()){
+        if (wkrt.hasError()) {
             showError(wkrt.getErrorResult());
         }
 
-        showResult(wkrt.getCountedResult());
+        if (wkrt.hasResult()) {
+            showResult(wkrt.getCountedResult());
+        }
     }
 
     private void sendRequest() {
-        if (/*hasConnection(getActivity())*/ true) {
+        if (hasConnection(getActivity())) {
             ToggleButton filter = (ToggleButton) getActivity().findViewById(R.id.buttonFilter);
             EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
-            WordCountRequestTask wkrt = new WordCountRequestTask();
+
+            WordCountRequestTask wkrt = new WordCountRequestTask(this);
             if (filter.isChecked())
                 wkrt.setIsFilterWords(WordCountRequestTask.TRUE);
             wkrt.setRequestText(inputView.getEditableText().toString());
@@ -102,7 +104,7 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         }
     }
 
-    private void showResult(Map<String, Integer> countResult){
+    private void showResult(Map<String, Integer> countResult) {
         TableLayout tableLayout = (TableLayout) getActivity().findViewById(R.id.resultTable);
         tableLayout.removeAllViews();
 
@@ -121,8 +123,7 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         tableRow.setPadding(5, 5, 5, 5);
         tableLayout.addView(tableRow);
 
-        for (Map.Entry<String, Integer> entry: countResult.entrySet())
-        {
+        for (Map.Entry<String, Integer> entry : countResult.entrySet()) {
             TextView txt1 = new TextView(getActivity());
             TextView txt2 = new TextView(getActivity());
 
@@ -135,14 +136,14 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         }
     }
 
-    private void hideError(){
+    private void hideError() {
         ListView lvMain = (ListView) getActivity().findViewById(R.id.errorList);
-        if (lvMain.getAdapter() != null && !lvMain.getAdapter().isEmpty()){
-            ((ArrayAdapter<String>)lvMain.getAdapter()).clear();
+        if (lvMain.getAdapter() != null && !lvMain.getAdapter().isEmpty()) {
+            ((ArrayAdapter<String>) lvMain.getAdapter()).clear();
         }
     }
 
-    private void showError(List<String> errorList){
+    private void showError(List<String> errorList) {
         ListView lvMain = (ListView) getActivity().findViewById(R.id.errorList);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
@@ -150,16 +151,13 @@ public class HomeFragment  extends Fragment implements RequestInFragment, OnClic
         lvMain.setAdapter(adapter);
     }
 
-    private boolean hasConnection(Context context)
-    {
+    private boolean hasConnection(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
-        {
+        if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null)
                 for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
 
