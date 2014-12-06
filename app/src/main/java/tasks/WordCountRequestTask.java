@@ -1,7 +1,10 @@
 package tasks;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -30,12 +33,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void, String> {
+public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, String> {
 
     private static final String TAG = WordCountRequestTask.class.getSimpleName();
-    private T activity;
+
+
     private static final long SECOND = 1000;
     private final long DEFAULT_TIMEOUT = 30 * SECOND;
     private static final int PORT = 8008;
@@ -65,11 +71,15 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
     private OkHttpClient client;
 
+    private Activity activity;
+    private RequestInFragment fragment;
     private String requestText;
-
     private String sortingOrder = VALUE_DESCENDING;
-
     private String isFilterWords = FALSE;
+
+    JSONObject countedResult = null;
+    JSONArray errorResult = null;
+
 
     public void setRequestText(String val){
         requestText = val;
@@ -83,19 +93,18 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
         isFilterWords = val;
     }
 
-
     @Override
-    protected String doInBackground(T... params) {
-        if (params == null || params.length < 1) {
-            throw new IllegalArgumentException();
-        }
+    protected String doInBackground(RequestInFragment... params) {
 
-        activity = params[0];
+        fragment = params[0];
+        activity = fragment.getActivity();
+
+        fragment.startExecute(this);
 
         try {
             return requestText == null || requestText.length()==0 ? "" : post(requestText, sortingOrder, isFilterWords);
         } catch (Exception e) {
-            Log.e("MainActivity", e.getMessage(), e);
+            Log.e(TAG, e.getMessage(), e);
         }
 
         return null;
@@ -103,40 +112,37 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
 
     @Override
     protected void onPostExecute(String parsedTextResult) {
+        super.onPostExecute(parsedTextResult);
+
         Log.d(TAG, parsedTextResult);
 
         JSONObject reader;
-        JSONObject countedResult = null;
-        JSONArray errorResult = null;
         try {
             reader = new JSONObject(parsedTextResult);
 
             errorResult = reader.getJSONArray("errors");
-            if (errorResult.length() > 0){
-                showError(errorResult);
-            }
-
             countedResult = reader.getJSONObject("countedResult");
+            /*
             Iterator<?> keys = countedResult.keys();
 
             TableLayout tableLayout = (TableLayout) activity.findViewById(R.id.resultTable);
             tableLayout.removeAllViews();
-
-            final ToggleButton filter = (ToggleButton) activity.findViewById(R.id.buttonFilter);
+*/
+            /*final ToggleButton filter = (ToggleButton) activity.findViewById(R.id.buttonFilter);
 
             filter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    WordCountRequestTask<MainActivity> wkrt = new WordCountRequestTask<MainActivity>();
+                    WordCountRequestTask wkrt = new WordCountRequestTask();
                     if (isChecked) {
                         wkrt.setIsFilterWords(TRUE);
                     } else {
                         wkrt.setIsFilterWords(FALSE);
                     }
-                    wkrt.execute((MainActivity) activity);
+                    //wkrt.execute((MainActivity) activity);
                 }
-            });
-
+            });*/
+/*
             final TextView sortBtnWord = new TextView(activity);
             final TextView sortBtnCount = new TextView(activity);
 
@@ -165,7 +171,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
                 @Override
                 public void onClick(View v) {
                     EditText inputView = (EditText) activity.findViewById(R.id.inputText);
-                    WordCountRequestTask<MainActivity> wkrt = new WordCountRequestTask<MainActivity>();
+                    WordCountRequestTask wkrt = new WordCountRequestTask();
                     wkrt.setRequestText(inputView.getEditableText().toString());
                     if (sortBtnWord.getText().equals("Word") || sortBtnWord.getText().equals("Word ↑")){
                         wkrt.setSortingOrder(KEY_DESCENDING);
@@ -173,7 +179,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
                         wkrt.setSortingOrder(KEY_ASCENDING);
                     }
                     sortBtnCount.setText("Count");
-                    wkrt.execute((MainActivity) activity);
+                    //wkrt.execute((MainActivity) activity);
                 }
             });
 
@@ -182,7 +188,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
                 public void onClick(View v) {
                     Log.d(TAG, "Click sortBtnCount");
                     EditText inputView = (EditText) activity.findViewById(R.id.inputText);
-                    WordCountRequestTask<MainActivity> wkrt = new WordCountRequestTask<MainActivity>();
+                    WordCountRequestTask wkrt = new WordCountRequestTask();
                     wkrt.setRequestText(inputView.getEditableText().toString());
                     if (sortBtnCount.getText().equals("Count") || sortBtnCount.getText().equals("Count ↑")){
                         wkrt.setSortingOrder(VALUE_DESCENDING);
@@ -190,7 +196,7 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
                         wkrt.setSortingOrder(VALUE_ASCENDING);
                     }
                     sortBtnWord.setText("Word");
-                    wkrt.execute((MainActivity) activity);
+                    //wkrt.execute((MainActivity) activity);
                 }
             });
 
@@ -215,9 +221,46 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
                 tableLayout.addView(tableRow);
             }
 
+
+*/
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        fragment.finishExecute(this);
+    }
+
+    public boolean hasError(){
+        return (errorResult.length() > 0);
+    }
+
+    public List<String> getErrorResult() {
+        List<String> list = new ArrayList<String>();
+        try {
+            for(int i = 0; i < errorResult.length(); i++){
+                list.add(errorResult.getString(i));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public Map<String, Integer> getCountedResult() {
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        Iterator<?> keys = countedResult.keys();
+        try {
+            while( keys.hasNext() ){
+                String key = (String)keys.next();
+                int value = countedResult.getInt(key);
+                map.put(key, value);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return map;
     }
 
     private void showError(JSONArray errorResult) throws JSONException {
@@ -276,6 +319,23 @@ public class WordCountRequestTask<T extends Activity> extends AsyncTask<T, Void,
             resultStr = response.body().string();
         }
         return resultStr;
+    }
+
+    public boolean hasConnection(Context context)
+    {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
+        }
+        return false;
     }
 
 }
