@@ -9,14 +9,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.qalight.javacourse.wordcounterandroidclient.MainActivity;
 import com.qalight.javacourse.wordcounterandroidclient.R;
@@ -35,13 +32,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Locale;
 
 public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, String> {
 
     private static final String TAG = WordCountRequestTask.class.getSimpleName();
-
-
+  
     private static final long SECOND = 1000;
     private final long DEFAULT_TIMEOUT = 30 * SECOND;
     private static final int PORT = 8008;
@@ -74,7 +72,9 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     private Activity activity;
     private RequestInFragment fragment;
     private String requestText;
+
     private String sortingOrder = VALUE_DESCENDING;
+
     private String isFilterWords = FALSE;
 
     JSONObject countedResult = null;
@@ -92,6 +92,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     public void setIsFilterWords(String val){
         isFilterWords = val;
     }
+
 
     @Override
     protected String doInBackground(RequestInFragment... params) {
@@ -307,7 +308,9 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
         client = new OkHttpClient();
 
-        Request request = buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, LANGUAGE_DEFAULT_EN);
+        String locale = Locale.getDefault().getLanguage();
+
+        Request request = buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, locale);
 
         Response response = client.newCall(request).execute();
 
