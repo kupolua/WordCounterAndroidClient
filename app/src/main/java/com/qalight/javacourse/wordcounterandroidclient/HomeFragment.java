@@ -181,19 +181,6 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
             }
         });
 
-        sortBtnCount.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WordResultSorter sorter = WordResultSorter.VALUE_DESCENDING;
-                if (sortingOrder.equals(VALUE_ASCENDING)){
-                    sorter = WordResultSorter.VALUE_ASCENDING;
-                }
-
-                Map<String, Integer> sortedRefinedCountedWords = sorter.getSortedWords(countedResult);
-                showResult(sortedRefinedCountedWords);
-            }
-        });
-
 
         sortBtnWord.setText(wordBtnText);
         sortBtnCount.setText(countBtnText);
