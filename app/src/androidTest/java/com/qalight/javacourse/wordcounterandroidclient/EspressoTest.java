@@ -6,16 +6,18 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.apps.common.testing.ui.espresso.Espresso;
 import com.google.android.apps.common.testing.ui.espresso.UiController;
 import com.google.android.apps.common.testing.ui.espresso.ViewAction;
-import com.google.android.apps.common.testing.ui.espresso.action.ViewActions;
 import com.google.android.apps.common.testing.ui.espresso.assertion.ViewAssertions;
 import com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
+import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
+import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
+import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
+import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
 
 public class EspressoTest extends ActivityInstrumentationTestCase2<MainActivity> {
     @TargetApi(Build.VERSION_CODES.FROYO)
@@ -31,25 +33,24 @@ public class EspressoTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     public void testEspressoClickingListViewPopulatesTextView() {
         //Given the ListView is populated
-        Espresso.onView(ViewMatchers.withId(R.id.buttonOk)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(R.id.buttonOk)).perform(click());
     }
 
-    public void testCountWords_header2() {
+    public void testCountWords_mainHeader() {
+        // todo: Add tests for all locales.
         String expectedText = "Получить статистику частоты употребления слов!";
 //        String expectedText = "Get most used words!";
 
-        Espresso.onView(ViewMatchers.withId(R.id.aboutTitle)).check(ViewAssertions.matches(ViewMatchers.withText(expectedText)));
+        onView(ViewMatchers.withId(R.id.aboutTitle)).check(ViewAssertions.matches(ViewMatchers.withText(expectedText)));
     }
 
     public void testCountWords_plainText() {
-        String inputText = "текст";
+        String inputText = "текст ыъЪэЭ Two one tWo";
 
-        Espresso.onView(ViewMatchers.withId(R.id.inputText)).perform(new SetTextAction(inputText));
-        Espresso.onView(ViewMatchers.withId(R.id.buttonOk)).perform(ViewActions.click());
-
-//        onView(allOf(
-//                isDescendantOfA(result)));
-//        onView(withId(R.id.resultTable)).check(matches(withText(expectedText)));
+        onView(withId(R.id.inputText)).perform(new SetTextAction(inputText));
+        onView(withText(R.string.checkbox_filter)).perform(click());
+        onView(withId(R.id.buttonOk)).perform(click());
+        onView(withText(R.string.table_head_word)).perform(click());
     }
 
     private static class SetTextAction implements ViewAction {

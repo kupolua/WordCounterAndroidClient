@@ -1,10 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$PlaceholderFragment">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,6 +36,13 @@
         android:textIsSelectable="true"
         android:textStyle="italic" />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkbox_filter"
+        android:id="@+id/buttonFilter"
+        android:layout_below="@+id/inputText" />
+
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -49,7 +59,8 @@
         android:id="@+id/errorList"
         android:layout_below="@+id/buttonOk" />
 
-    <ScrollView android:id="@+id/textAreaScroller"
+    <ScrollView
+        android:id="@+id/textAreaScroller"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@+id/errorList"
@@ -64,16 +75,8 @@
             android:stretchColumns="*"
             android:id="@+id/resultTable"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-        </TableLayout>
+            android:layout_height="wrap_content"></TableLayout>
     </ScrollView>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_on_filter"
-        android:id="@+id/buttonFilter"
-        android:layout_below="@+id/inputText" />
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -81,6 +84,5 @@
         android:id="@+id/spinner"
         android:layout_alignTop="@+id/errorList"
         android:layout_centerHorizontal="true" />
-
 
 </RelativeLayout>
