@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
+        android:lines="5"
         android:hint="@string/input_field_text"
         android:ems="10"
         android:id="@+id/inputText"
@@ -68,7 +69,6 @@
     </ScrollView>
 
     <CheckBox
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_on_filter"
@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:layout_alignTop="@+id/buttonFilter"
+        android:layout_alignTop="@+id/errorList"
         android:layout_centerHorizontal="true" />
 
 

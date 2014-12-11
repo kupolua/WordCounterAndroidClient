@@ -4,9 +4,9 @@ import android.support.v4.app.FragmentActivity;
 
 public interface RequestInFragment {
 
-    public void startExecute(WordCountRequestTask wkrt);
+    public void startExecute(WordCountRequestTask requestTask);
 
-    public void finishExecute(WordCountRequestTask wkrt);
+    public void finishExecute(WordCountRequestTask requestTask);
 
     public FragmentActivity getActivity();
 }
