@@ -17,6 +17,6 @@
     <string name="table_head_count">Count  </string>
     <string name="table_head_count_up">Count ↑</string>
     <string name="table_head_count_down">Count ↓</string>
-    <string name="error_no_connection">Not internet connection</string>
     <string name="error_no_text">Empty text</string>
+    <string name="error_no_connection">Not internet connection</string>
 </resources>
