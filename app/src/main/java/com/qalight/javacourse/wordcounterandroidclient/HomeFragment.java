@@ -141,7 +141,8 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         TableRow tableRow = new TableRow(getActivity());
         tableRow.addView(sortBtnWord);
         tableRow.addView(sortBtnCount);
-        tableRow.setBackgroundColor(Color.parseColor("#cccccc"));
+        final String grayColor = "#cccccc";
+        tableRow.setBackgroundColor(Color.parseColor(grayColor));
         tableRow.setPadding(5, 5, 5, 5);
         tableLayout.addView(tableRow);
 

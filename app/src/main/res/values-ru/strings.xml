@@ -4,17 +4,17 @@
     <string name="about_title">"O нас"</string>
     <string name="example_title">"Получить статистику частоты употребления слов!"</string>
     <string name="input_field_text">"Если Вы хотите, чтобы запрос был обработан как URL, пожалуйста, добавьте вначале http://"</string>
-    <string name="title_about">О программе</string>
     <string name="action_refresh">Обновить</string>
     <string name="title_home">Главная</string>
+    <string name="title_about">О программе</string>
     <string name="checkbox_filter">Фильтровать</string>
     <string name="button_countwords">Посчитать слова</string>
-    <string name="error_no_connection">Нет интернет подключения</string>
-    <string name="error_no_text">Заполните поле для текста</string>
     <string name="table_head_word">Слово  </string>
     <string name="table_head_word_up">Слово ↑</string>
     <string name="table_head_word_down">Слово ↓</string>
     <string name="table_head_count">Кол-во  </string>
     <string name="table_head_count_up">Кол-во ↑</string>
     <string name="table_head_count_down">Кол-во ↓</string>
+    <string name="error_no_text">Заполните поле для текста</string>
+    <string name="error_no_connection">Нет интернет подключения</string>
 </resources>
