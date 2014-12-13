@@ -21,19 +21,16 @@
         android:layout_marginBottom="7dp" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:id="@+id/inputText"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/aboutTitle"
+        android:layout_marginBottom="7dp"
+        android:ems="10"
+        android:hint="@string/input_field_text"
         android:inputType="textMultiLine"
         android:lines="5"
-        android:hint="@string/input_field_text"
-        android:ems="10"
-        android:id="@+id/inputText"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="7dp"
-        android:layout_below="@+id/aboutTitle"
-        android:layout_alignParentRight="true"
         android:textSize="14sp"
-        android:textIsSelectable="true"
         android:textStyle="italic" />
 
     <CheckBox
