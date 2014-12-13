@@ -1,9 +1,14 @@
 package tasks;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.qalight.javacourse.wordcounterandroidclient.R;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -43,17 +48,12 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     public static final String FALSE = "false";
 
     public static final String PARAM_LANGUAGE = "Accept-Language";
-    public static final String LANGUAGE_DEFAULT_EN = "en-EN,en;q=0.5";
-    public static final String LANGUAGE_RU = "ru";
-    public static final String LANGUAGE_UK = "uk";
 
     private static final String SERVER_NAME = "http://95.158.60.148:";
     private static final String CONTEXT = "/WordCounter/";
     private static final String COUNT_REQUEST = "countWordsWithParams";
     private static final String COUNT_URL = SERVER_NAME + PORT + CONTEXT + COUNT_REQUEST;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
-    private OkHttpClient client;
 
     private Activity activity;
     private RequestInFragment fragment;
@@ -63,8 +63,10 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
     private String isFilterWords = FALSE;
 
-    JSONObject countedResult = null;
-    JSONArray errorResult = null;
+    JSONObject countedResult;
+    JSONArray errorResult;
+
+    List<String> sysError = new ArrayList<String>();
 
     public WordCountRequestTask(RequestInFragment _fragment) {
         fragment = _fragment;
@@ -85,13 +87,22 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
     @Override
     protected String doInBackground(RequestInFragment... params) {
-        try {
-            return requestText == null || requestText.length() == 0 ? "" : post(requestText, sortingOrder, isFilterWords);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
+        if (hasConnection(activity)) {
+            try {
+                if (requestText == null || requestText.length() == 0){
+                    addSysError(activity.getString(R.string.error_no_text));
+                } else {
+                    return post(requestText, sortingOrder, isFilterWords);
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage(), e);
+            }
+        } else {
+            addSysError(activity.getString(R.string.error_no_connection));
         }
 
-        return null;
+        return "";
     }
 
     @Override
@@ -103,36 +114,33 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
 
     @Override
     protected void onPostExecute(String parsedTextResult) {
-        Log.d(TAG, parsedTextResult);
-
         JSONObject reader;
+
         try {
             reader = new JSONObject(parsedTextResult);
 
             errorResult = reader.getJSONArray("errors");
             countedResult = reader.getJSONObject("countedResult");
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
 
         fragment.finishExecute(this);
     }
 
     public boolean hasError() {
-        if (errorResult != null)
-            return (errorResult.length() > 0);
-
-        return false;
+        return (!sysError.isEmpty() || (errorResult != null && errorResult.length() > 0));
     }
 
     public List<String> getErrorResult() {
         List<String> list = new ArrayList<String>();
+        list.addAll(sysError);
         try {
             for (int i = 0; i < errorResult.length(); i++) {
                 list.add(errorResult.getString(i));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
 
         return list;
@@ -155,7 +163,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
                 map.put(key, value);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
 
         return map;
@@ -180,26 +188,51 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         return request;
     }
 
-    private String createFailMessage(String requestedValue) {
-        return "cannot get response from " + COUNT_URL + " with request: " + requestedValue;
+    private String createFailMessage(String errorMsg) {
+        return "{\"countedResult\":{},\"errors\":[\"" + errorMsg + "\"]}";
     }
 
     private String post(String requestedValue, String sortingResult, String filterWords)
             throws IOException {
-
-        client = new OkHttpClient();
-
+        Log.d(TAG, "POST");
+        String resultStr = null;
+        OkHttpClient client = new OkHttpClient();
         String locale = Locale.getDefault().getLanguage();
 
         Request request = buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, locale);
-        Response response = client.newCall(request).execute();
+        try {
+            Response response = client.newCall(request).execute();
 
-        String resultStr = null;
-        if (!response.isSuccessful()) {
-            createFailMessage(requestedValue);
-        } else {
-            resultStr = response.body().string();
+            if (!response.isSuccessful()) {
+                addSysError(activity.getString(R.string.request_can_not_be_executed));
+            } else {
+                resultStr = response.body().string();
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            addSysError(activity.getString(R.string.the_service_is_temporarily_unavailable));
         }
+
+
         return resultStr;
+    }
+
+    private void addSysError(String errorMsg) {
+        sysError.add(errorMsg);
+    }
+
+    private boolean hasConnection(Context context) {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (NetworkInfo anInfo : info)
+                    if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
+                        return true;
+                    }
+
+        }
+        return false;
     }
 }

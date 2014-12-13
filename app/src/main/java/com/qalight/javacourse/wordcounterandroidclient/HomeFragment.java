@@ -203,36 +203,15 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     }
 
     private void sendRequest() {
-        if (hasConnection(getActivity())) {
-            CheckBox filter = (CheckBox) getActivity().findViewById(R.id.buttonFilter);
-            EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
-            if (inputView.getEditableText().toString().length() > 0) {
-                WordCountRequestTask requestTask = new WordCountRequestTask(this);
-                if (filter.isChecked())
-                    requestTask.setIsFilterWords(WordCountRequestTask.TRUE);
-                requestTask.setRequestText(inputView.getEditableText().toString());
-                requestTask.execute(this);
-            } else {
-                Toast.makeText(getActivity(), R.string.error_no_text, Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
-        }
+        CheckBox filter = (CheckBox) getActivity().findViewById(R.id.buttonFilter);
+        EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
+        WordCountRequestTask requestTask = new WordCountRequestTask(this);
+        if (filter.isChecked())
+            requestTask.setIsFilterWords(WordCountRequestTask.TRUE);
+        requestTask.setRequestText(inputView.getEditableText().toString());
+        requestTask.execute(this);
     }
 
-    private boolean hasConnection(Context context) {
-        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null)
-                for (NetworkInfo anInfo : info)
-                    if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                        return true;
-                    }
-
-        }
-        return false;
-    }
 
     private void hideError() {
         ListView lvMain = (ListView) getActivity().findViewById(R.id.errorList);
