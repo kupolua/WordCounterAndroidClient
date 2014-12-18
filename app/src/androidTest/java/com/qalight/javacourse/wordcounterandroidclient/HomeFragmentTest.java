@@ -3,11 +3,7 @@ package com.qalight.javacourse.wordcounterandroidclient;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.robotium.solo.Solo;
 
