@@ -1,11 +1,8 @@
 package com.qalight.javacourse.wordcounterandroidclient;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -203,7 +199,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     }
 
     private void sendRequest() {
-        CheckBox filter = (CheckBox) getActivity().findViewById(R.id.buttonFilter);
+        CheckBox filter = (CheckBox) getActivity().findViewById(R.id.checkBoxFilter);
         EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
         WordCountRequestTask requestTask = new WordCountRequestTask(this);
         if (filter.isChecked())
