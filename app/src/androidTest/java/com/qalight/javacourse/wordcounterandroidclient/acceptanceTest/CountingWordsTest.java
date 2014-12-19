@@ -180,6 +180,9 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
 
     public void testEnterThreeLinks_withBrokenHtmlLink() throws Exception {
         // given
+        changeLocale(localizationRu);
+        Thread.sleep(waitTime);
+
         final String httpLinks = "http://kupol....in.ua/wordcounter/testData/page_latin.html " +
                 "http://kupol.in.ua/wordcounter/" +
                 "testData/%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0.pptx " +
@@ -211,6 +214,9 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
 
     public void testEnterThreeLinks_withTwoBrokenLinks() throws Exception {
         // given
+        changeLocale(localizationRu);
+        Thread.sleep(waitTime);
+
         final String httpLinks = "http://kupol....in.ua/wordcounter/testData/page_latin.html " +
                 "http://kupol....in.ua/wordcounter/" +
                 "testData/%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0.pptx " +
