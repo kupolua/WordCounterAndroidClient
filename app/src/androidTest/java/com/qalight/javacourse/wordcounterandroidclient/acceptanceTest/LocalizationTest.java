@@ -37,10 +37,11 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
 
     public void testLocal_en() throws Exception {
         // given
+        final String localizationEn = "en";
         final String expectedResult = "Get most used words!";
 
         // when
-        changeLocale("en");
+        changeLocale(localizationEn);
         Thread.sleep(waitTime);
 
         String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
@@ -51,10 +52,11 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
 
     public void testLocal_ru() throws Exception {
         // given
+        final String localizationRu = "ru";
         final String expectedResult = "Получить статистику частоты употребления слов!";
 
         // when
-        changeLocale("ru");
+        changeLocale(localizationRu);
         Thread.sleep(waitTime);
 
         String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
@@ -65,10 +67,11 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
 
     public void testLocal_uk() throws Exception {
         // given
+        final String localizationUk = "uk";
         final String expectedResult = "Отримати статистику частоти вживання слів!";
 
         // when
-        changeLocale("uk");
+        changeLocale(localizationUk);
         Thread.sleep(waitTime);
 
         String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
@@ -79,10 +82,11 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
 
     public void testLocal_fr() throws Exception {
         // given
+        final String localizationFr = "fr";
         final String expectedResult = "Get most used words!";
 
         // when
-        changeLocale("fr");
+        changeLocale(localizationFr);
         Thread.sleep(waitTime);
 
         String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
