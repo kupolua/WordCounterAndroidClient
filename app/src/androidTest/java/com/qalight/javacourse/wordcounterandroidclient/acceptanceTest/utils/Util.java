@@ -1,4 +1,4 @@
-package com.qalight.javacourse.wordcounterandroidclient.utils;
+package com.qalight.javacourse.wordcounterandroidclient.acceptanceTest.utils;
 
 import android.widget.TableLayout;
 import android.widget.TableRow;

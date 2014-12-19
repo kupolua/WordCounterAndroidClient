@@ -6,11 +6,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.qalight.javacourse.wordcounterandroidclient.R;
 import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -27,62 +25,34 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static utils.Constants.*;
+
 public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, String> {
 
     private static final String TAG = WordCountRequestTask.class.getSimpleName();
 
-    private static final long SECOND = 1000;
-    private final long DEFAULT_TIMEOUT = 30 * SECOND;
-    private static final int PORT = 8008;
-
-    private static final String PARAM_TEXT_COUNT = "textCount";
-
-    public static final String PARAM_SORTING_ORDER = "sortingOrder";
-    public static final String KEY_ASCENDING = "KEY_ASCENDING";
-    public static final String KEY_DESCENDING = "KEY_DESCENDING";
-    public static final String VALUE_ASCENDING = "VALUE_ASCENDING";
-    public static final String VALUE_DESCENDING = "VALUE_DESCENDING";
-
-    public static final String PARAM_IS_FILTER_WORDS = "isFilterWords";
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
-
-    public static final String PARAM_LANGUAGE = "Accept-Language";
-
-    private static final String SERVER_NAME = "http://95.158.60.148:";
-    private static final String CONTEXT = "/WordCounter/";
-    private static final String COUNT_REQUEST = "countWordsWithParams";
-    private static final String COUNT_URL = SERVER_NAME + PORT + CONTEXT + COUNT_REQUEST;
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
     private Activity activity;
     private RequestInFragment fragment;
     private String requestText;
-
     private String sortingOrder = VALUE_DESCENDING;
+    private String isFilterWords = FILTER_OFF;
 
-    private String isFilterWords = FALSE;
+    private JSONObject countedResult;
+    private JSONArray errorResult;
 
-    JSONObject countedResult;
-    JSONArray errorResult;
+    private List<String> errorsList = new ArrayList<String>();
 
-    List<String> sysError = new ArrayList<String>();
-
-    public WordCountRequestTask(RequestInFragment _fragment) {
-        fragment = _fragment;
+    public WordCountRequestTask(RequestInFragment fragment) {
+        this.fragment = fragment;
         activity = fragment.getActivity();
     }
 
-    public void setRequestText(String val) {
-        requestText = val;
+    public void setRequestText(String text) {
+        requestText = text;
     }
 
-    public void setSortingOrder(String val) {
-        sortingOrder = val;
-    }
-
-    public void setIsFilterWords(String val) {
-        isFilterWords = val;
+    public void setFilterWordsOn(String isFilterWords) {
+        this.isFilterWords = isFilterWords;
     }
 
     @Override
@@ -108,7 +78,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
         fragment.startExecute(this);
     }
 
@@ -119,22 +88,23 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         try {
             reader = new JSONObject(parsedTextResult);
 
-            errorResult = reader.getJSONArray("errors");
-            countedResult = reader.getJSONObject("countedResult");
+            final String jsonArrayErrors = "errors";
+            errorResult = reader.getJSONArray(jsonArrayErrors);
+            final String jsonObjectCountedResult = "countedResult";
+            countedResult = reader.getJSONObject(jsonObjectCountedResult);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
         }
-
         fragment.finishExecute(this);
     }
 
     public boolean hasError() {
-        return (!sysError.isEmpty() || (errorResult != null && errorResult.length() > 0));
+        return (!errorsList.isEmpty() || (errorResult != null && errorResult.length() > 0));
     }
 
     public List<String> getErrorResult() {
         List<String> list = new ArrayList<String>();
-        list.addAll(sysError);
+        list.addAll(errorsList);
         try {
             for (int i = 0; i < errorResult.length(); i++) {
                 list.add(errorResult.getString(i));
@@ -142,7 +112,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
         }
-
         return list;
     }
 
@@ -154,19 +123,18 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     }
 
     public Map<String, Integer> getCountedResult() {
-        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        Map<String, Integer> countedResultMap = new LinkedHashMap<String, Integer>();
         Iterator<?> keys = countedResult.keys();
         try {
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 int value = countedResult.getInt(key);
-                map.put(key, value);
+                countedResultMap.put(key, value);
             }
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
         }
-
-        return map;
+        return countedResultMap;
     }
 
     public Request buildCountRequestWithAllParams(String requestedValue,
@@ -188,10 +156,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         return request;
     }
 
-    private String createFailMessage(String errorMsg) {
-        return "{\"countedResult\":{},\"errors\":[\"" + errorMsg + "\"]}";
-    }
-
     private String post(String requestedValue, String sortingResult, String filterWords)
             throws IOException {
         Log.d(TAG, "POST");
@@ -199,7 +163,8 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         OkHttpClient client = new OkHttpClient();
         String locale = Locale.getDefault().getLanguage();
 
-        Request request = buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, locale);
+        Request request = buildCountRequestWithAllParams(requestedValue, sortingResult,
+                                                         filterWords, locale);
         try {
             Response response = client.newCall(request).execute();
 
@@ -213,13 +178,11 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
             Log.e(TAG, e.getMessage(), e);
             addSysError(activity.getString(R.string.the_service_is_temporarily_unavailable));
         }
-
-
         return resultStr;
     }
 
     private void addSysError(String errorMsg) {
-        sysError.add(errorMsg);
+        errorsList.add(errorMsg);
     }
 
     private boolean hasConnection(Context context) {
@@ -231,7 +194,6 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
                     if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
-
         }
         return false;
     }

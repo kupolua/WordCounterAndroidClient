@@ -16,7 +16,7 @@ import junit.framework.Assert;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.qalight.javacourse.wordcounterandroidclient.utils.Util.getTableResult;
+import static com.qalight.javacourse.wordcounterandroidclient.acceptanceTest.utils.Util.getTableResult;
 
 public class SortingTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -52,8 +52,8 @@ public class SortingTest extends ActivityInstrumentationTestCase2<MainActivity> 
         }};
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), inputText);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), inputText);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         clickOnHeadTable(wordField);
@@ -78,8 +78,8 @@ public class SortingTest extends ActivityInstrumentationTestCase2<MainActivity> 
         }};
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), inputText);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), inputText);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         clickOnHeadTable(wordField);
@@ -100,8 +100,8 @@ public class SortingTest extends ActivityInstrumentationTestCase2<MainActivity> 
         }};
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLink);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLink);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         clickOnHeadTable(countField);
@@ -125,8 +125,8 @@ public class SortingTest extends ActivityInstrumentationTestCase2<MainActivity> 
         }};
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLink);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLink);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         clickOnHeadTable(countField);

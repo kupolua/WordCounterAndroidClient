@@ -14,7 +14,7 @@ import junit.framework.Assert;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.qalight.javacourse.wordcounterandroidclient.utils.Util.getTableResult;
+import static com.qalight.javacourse.wordcounterandroidclient.acceptanceTest.utils.Util.getTableResult;
 
 public class FilteringWordsTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -40,9 +40,9 @@ public class FilteringWordsTest extends ActivityInstrumentationTestCase2<MainAct
         final String httpLink = "http://kupol.in.ua/wordcounter/testData/page_latin.html";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLink);
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLink);
         solo.clickOnView(solo.getView(R.id.checkBoxFilter));
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);
@@ -60,13 +60,13 @@ public class FilteringWordsTest extends ActivityInstrumentationTestCase2<MainAct
         final String httpLink = "http://kupol.in.ua/wordcounter/testData/page_latin.html";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLink);
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLink);
         solo.clickOnView(solo.getView(R.id.checkBoxFilter));
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         solo.clickOnView(solo.getView(R.id.checkBoxFilter));
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);

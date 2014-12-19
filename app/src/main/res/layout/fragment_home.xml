@@ -21,7 +21,7 @@
         android:layout_marginBottom="7dp" />
 
     <EditText
-        android:id="@+id/inputText"
+        android:id="@+id/inputTextArea"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/aboutTitle"
@@ -38,15 +38,15 @@
         android:layout_height="wrap_content"
         android:text="@string/checkbox_filter"
         android:id="@+id/checkBoxFilter"
-        android:layout_below="@+id/inputText" />
+        android:layout_below="@+id/inputTextArea" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_countwords"
-        android:id="@+id/buttonOk"
-        android:layout_below="@+id/inputText"
+        android:text="@string/button_count_words"
+        android:id="@+id/buttonCountWords"
+        android:layout_below="@+id/inputTextArea"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp" />
 
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/errorList"
-        android:layout_below="@+id/buttonOk" />
+        android:layout_below="@+id/buttonCountWords" />
 
     <ScrollView
         android:id="@+id/textAreaScroller"

@@ -24,13 +24,12 @@ import java.util.Map;
 
 import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
-import tasks.WordResultSorter;
+import utils.WordResultSorter;
+
+import static utils.Constants.*;
 
 public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
-    public static final String KEY_ASCENDING = "KEY_ASCENDING";
-    public static final String KEY_DESCENDING = "KEY_DESCENDING";
-    public static final String VALUE_ASCENDING = "VALUE_ASCENDING";
-    public static final String VALUE_DESCENDING = "VALUE_DESCENDING";
+
     String sortingOrder = VALUE_DESCENDING;
     private ProgressBar spinner;
 
@@ -47,7 +46,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).setTitle(R.string.title_home);
+        activity.setTitle(R.string.title_home);
     }
 
     @Override
@@ -57,11 +56,11 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         Intent intent = getActivity().getIntent();
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
 
-        EditText editText = (EditText) getActivity().findViewById(R.id.inputText);
+        EditText editText = (EditText) getActivity().findViewById(R.id.inputTextArea);
         editText.setText(sharedText);
 
-        Button buttonOk = (Button) getActivity().findViewById(R.id.buttonOk);
-        buttonOk.setOnClickListener(this);
+        Button buttonCountWords = (Button) getActivity().findViewById(R.id.buttonCountWords);
+        buttonCountWords.setOnClickListener(this);
 
         spinner = (ProgressBar) getActivity().findViewById(R.id.spinner);
         spinner.setVisibility(View.GONE);
@@ -84,8 +83,8 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
             showError(requestTask.getErrorResult());
         }
         if (requestTask.hasResult()) {
-            Map<String, Integer> defaultResult = sortResultByDefaultSorting(requestTask);
-            showResult(defaultResult);
+            Map<String, Integer> countingWordsMap = sortResultByDefaultSorting(requestTask);
+            showCountingWords(countingWordsMap);
         }
         spinner.setVisibility(View.GONE);
     }
@@ -98,14 +97,14 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     }
 
     private void showError(List<String> errorList) {
-        ListView lvMain = (ListView) getActivity().findViewById(R.id.errorList);
+        ListView errorListView = (ListView) getActivity().findViewById(R.id.errorList);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.error_list_item, errorList);
-        lvMain.setAdapter(adapter);
+        errorListView.setAdapter(adapter);
     }
 
-    private void showResult(Map<String, Integer> result) {
+    private void showCountingWords(Map<String, Integer> result) {
 
         TableLayout tableLayout = (TableLayout) getActivity().findViewById(R.id.resultTable);
         tableLayout.removeAllViews();
@@ -159,7 +158,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
                 }
 
                 Map<String, Integer> sortedResult = sorter.getSortedWords(map);
-                showResult(sortedResult);
+                showCountingWords(sortedResult);
             }
         });
     }
@@ -178,7 +177,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
                 }
 
                 Map<String, Integer> sortedResult = sorter.getSortedWords(map);
-                showResult(sortedResult);
+                showCountingWords(sortedResult);
             }
         });
     }
@@ -199,20 +198,23 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     }
 
     private void sendRequest() {
-        CheckBox filter = (CheckBox) getActivity().findViewById(R.id.checkBoxFilter);
-        EditText inputView = (EditText) getActivity().findViewById(R.id.inputText);
+        EditText inputTextView = (EditText) getActivity().findViewById(R.id.inputTextArea);
+        CheckBox filterCheckBox = (CheckBox) getActivity().findViewById(R.id.checkBoxFilter);
+
         WordCountRequestTask requestTask = new WordCountRequestTask(this);
-        if (filter.isChecked())
-            requestTask.setIsFilterWords(WordCountRequestTask.TRUE);
-        requestTask.setRequestText(inputView.getEditableText().toString());
+
+        if (filterCheckBox.isChecked()) {
+            requestTask.setFilterWordsOn(FILTER_ON);
+        }
+        requestTask.setRequestText(inputTextView.getEditableText().toString());
         requestTask.execute(this);
     }
 
 
     private void hideError() {
-        ListView lvMain = (ListView) getActivity().findViewById(R.id.errorList);
-        if (lvMain.getAdapter() != null && !lvMain.getAdapter().isEmpty()) {
-            ((ArrayAdapter<String>) lvMain.getAdapter()).clear();
+        ListView errorListView = (ListView) getActivity().findViewById(R.id.errorList);
+        if (errorListView.getAdapter() != null && !errorListView.getAdapter().isEmpty()) {
+            ((ArrayAdapter<String>) errorListView.getAdapter()).clear();
         }
     }
 }

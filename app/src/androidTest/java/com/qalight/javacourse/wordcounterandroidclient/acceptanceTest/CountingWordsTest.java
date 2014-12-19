@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.qalight.javacourse.wordcounterandroidclient.utils.Util.getTableResult;
+import static com.qalight.javacourse.wordcounterandroidclient.acceptanceTest.utils.Util.getTableResult;
 
 public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -49,8 +49,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
         final String text = "the аэросъемка, АЭРОСЪЕМКА, дЫмаРь, дымарь, Під'їзд, ґедзь";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), text);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), text);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);
@@ -78,8 +78,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
         final int errorMassageNum = 0;
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), text);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), text);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         ListView listView = (ListView) solo.getView(R.id.errorList);
@@ -98,8 +98,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
         final String expectedResult = "Заполните поле для текста";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), text);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), text);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         ListView listView = (ListView) solo.getView(R.id.errorList);
@@ -114,8 +114,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
         final String httpLink = "http://kupol.in.ua/wordcounter/testData/page_cyrillic.html";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLink);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLink);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);
@@ -137,8 +137,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
                 "testData/%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0.pptx";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLink);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLink);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);
@@ -159,8 +159,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
                 "http://kupol.in.ua/wordcounter/testData/letters%2Bnumbers.txt";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLinks);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLinks);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);
@@ -188,8 +188,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
                 "ссылке: >http://kupol....in.ua/wordcounter/testData/page_latin.html";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLinks);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLinks);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);
@@ -222,8 +222,8 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
                 "testData/%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0.pptx";
 
         // when
-        solo.enterText((EditText) solo.getView(R.id.inputText), httpLinks);
-        solo.clickOnView(solo.getView(R.id.buttonOk));
+        solo.enterText((EditText) solo.getView(R.id.inputTextArea), httpLinks);
+        solo.clickOnView(solo.getView(R.id.buttonCountWords));
         Thread.sleep(waitTime);
 
         Map<String, String> actualResult = getTableResult(solo);

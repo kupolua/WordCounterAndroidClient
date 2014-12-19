@@ -10,7 +10,7 @@
     <string name="title_home">Home</string>
     <string name="title_about">About</string>
     <string name="checkbox_filter">Filter</string>
-    <string name="button_countwords">Count words</string>
+    <string name="button_count_words">Count words</string>
     <string name="table_head_word">Word  </string>
     <string name="table_head_word_up">Word ↑</string>
     <string name="table_head_word_down">Word ↓</string>
