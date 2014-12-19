@@ -29,7 +29,7 @@ import utils.WordResultSorter;
 import static utils.Constants.FILTER_ON;
 
 public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
-    WordResultSorter sorter;
+    WordResultSorter sorter = WordResultSorter.VALUE_DESCENDING;
     private ProgressBar spinner;
 
     public HomeFragment() {
