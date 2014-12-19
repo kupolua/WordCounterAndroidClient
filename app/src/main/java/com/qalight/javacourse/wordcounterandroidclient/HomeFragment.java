@@ -155,12 +155,17 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         TableRow tableRow = new TableRow(getActivity());
         tableRow.addView(sortBtnWord);
         tableRow.addView(sortBtnCount);
+
+        setTableFormatting(tableLayout, tableRow);
+
+        createTableBodyOnLayout(result, tableLayout);
+    }
+
+    private void setTableFormatting(TableLayout tableLayout, TableRow tableRow) {
         final String grayColor = "#cccccc";
         tableRow.setBackgroundColor(Color.parseColor(grayColor));
         tableRow.setPadding(5, 5, 5, 5);
         tableLayout.addView(tableRow);
-
-        createTableBodyOnLayout(result, tableLayout);
     }
 
     private Map<String, Integer> sortResultByValue(Map<String, Integer> result) {
@@ -190,14 +195,14 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     private void createTableBodyOnLayout(Map<String, Integer> countResult, TableLayout tableLayout) {
         TableRow tableRow;
         for (Map.Entry<String, Integer> entry : countResult.entrySet()) {
-            TextView txt1 = new TextView(getActivity());
-            TextView txt2 = new TextView(getActivity());
+            TextView word = new TextView(getActivity());
+            TextView count = new TextView(getActivity());
 
-            txt1.setText(entry.getKey());
-            txt2.setText(String.valueOf(entry.getValue()));
+            word.setText(entry.getKey());
+            count.setText(String.valueOf(entry.getValue()));
             tableRow = new TableRow(getActivity());
-            tableRow.addView(txt1);
-            tableRow.addView(txt2);
+            tableRow.addView(word);
+            tableRow.addView(count);
             tableLayout.addView(tableRow);
         }
     }
@@ -214,7 +219,6 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         requestTask.setRequestText(inputTextView.getEditableText().toString());
         requestTask.execute(this);
     }
-
 
     private void hideError() {
         ListView errorListView = (ListView) getActivity().findViewById(R.id.errorList);
