@@ -26,14 +26,21 @@ import tasks.RequestInFragment;
 import tasks.WordCountRequestTask;
 import utils.WordResultSorter;
 
-import static utils.Constants.*;
+import static utils.Constants.FILTER_ON;
 
 public class HomeFragment extends Fragment implements RequestInFragment, OnClickListener {
-
-    String sortingOrder = VALUE_DESCENDING;
+    WordResultSorter sorter;
     private ProgressBar spinner;
 
     public HomeFragment() {
+    }
+
+    public WordResultSorter getSorter() {
+        return sorter;
+    }
+
+    public void setSorter(WordResultSorter sorter) {
+        this.sorter = sorter;
     }
 
     @Override
@@ -83,8 +90,8 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
             showError(requestTask.getErrorResult());
         }
         if (requestTask.hasResult()) {
-            Map<String, Integer> countingWordsMap = sortResultByDefaultSorting(requestTask);
-            showCountingWords(countingWordsMap);
+            Map<String, Integer> defaultResult = sortResultByDefaultSorting(requestTask);
+            showResult(defaultResult);
         }
         spinner.setVisibility(View.GONE);
     }
@@ -92,19 +99,18 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     private Map<String, Integer> sortResultByDefaultSorting(WordCountRequestTask requestTask) {
         Map<String, Integer> countedResult = requestTask.getCountedResult();
 
-        WordResultSorter sorter = WordResultSorter.valueOf(sortingOrder);
         return sorter.getSortedWords(countedResult);
     }
 
     private void showError(List<String> errorList) {
         ListView errorListView = (ListView) getActivity().findViewById(R.id.errorList);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.error_list_item, errorList);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(getActivity(), R.layout.error_list_item, errorList);
         errorListView.setAdapter(adapter);
     }
 
-    private void showCountingWords(Map<String, Integer> result) {
+    private void showResult(final Map<String, Integer> result) {
 
         TableLayout tableLayout = (TableLayout) getActivity().findViewById(R.id.resultTable);
         tableLayout.removeAllViews();
@@ -114,21 +120,34 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         String wordBtnText = getResources().getString(R.string.table_head_word);
         String countBtnText = getResources().getString(R.string.table_head_count);
 
-        if (sortingOrder.equals(KEY_DESCENDING)) {
+        if (sorter.equals(WordResultSorter.KEY_DESCENDING)) {
             wordBtnText = getResources().getString(R.string.table_head_word_up);
         }
-        if (sortingOrder.equals(KEY_ASCENDING)) {
+        if (sorter.equals(WordResultSorter.KEY_ASCENDING)) {
             wordBtnText = getResources().getString(R.string.table_head_word_down);
         }
-        if (sortingOrder.equals(VALUE_DESCENDING)) {
+        if (sorter.equals(WordResultSorter.VALUE_DESCENDING)) {
             countBtnText = getResources().getString(R.string.table_head_count_up);
         }
-        if (sortingOrder.equals(VALUE_ASCENDING)) {
+        if (sorter.equals(WordResultSorter.VALUE_ASCENDING)) {
             countBtnText = getResources().getString(R.string.table_head_count_down);
         }
 
-        sortBtnWordOnClickListener(sortBtnWord, result);
-        sortBtnCountOnClickListener(sortBtnCount, result);
+        sortBtnWord.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, Integer> sortedResultByKey = sortResultByKey(result);
+                showResult(sortedResultByKey);
+            }
+        });
+
+        sortBtnCount.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, Integer> sortedResult = sortResultByValue(result);
+                showResult(sortedResult);
+            }
+        });
 
         sortBtnWord.setText(wordBtnText);
         sortBtnCount.setText(countBtnText);
@@ -144,42 +163,28 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         createTableBodyOnLayout(result, tableLayout);
     }
 
-    private void sortBtnCountOnClickListener(TextView sortBtnCount, final Map<String, Integer> map) {
-        sortBtnCount.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WordResultSorter sorter;
-                if (sortingOrder.equals(VALUE_ASCENDING)) {
-                    sorter = WordResultSorter.VALUE_DESCENDING;
-                    sortingOrder = VALUE_DESCENDING;
-                } else {
-                    sorter = WordResultSorter.VALUE_ASCENDING;
-                    sortingOrder = VALUE_ASCENDING;
-                }
+    private Map<String, Integer> sortResultByValue(Map<String, Integer> result) {
+        WordResultSorter sorter = getSorter();
+        if (sorter.equals(WordResultSorter.VALUE_ASCENDING)) {
+            sorter = WordResultSorter.VALUE_DESCENDING;
+        } else {
+            sorter = WordResultSorter.VALUE_ASCENDING;
+        }
+        setSorter(sorter);
 
-                Map<String, Integer> sortedResult = sorter.getSortedWords(map);
-                showCountingWords(sortedResult);
-            }
-        });
+        return sorter.getSortedWords(result);
     }
 
-    private void sortBtnWordOnClickListener(TextView sortBtnWord, final Map<String, Integer> map) {
-        sortBtnWord.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WordResultSorter sorter;
-                if (sortingOrder.equals(KEY_ASCENDING)) {
-                    sorter = WordResultSorter.KEY_DESCENDING;
-                    sortingOrder = KEY_DESCENDING;
-                } else {
-                    sorter = WordResultSorter.KEY_ASCENDING;
-                    sortingOrder = KEY_ASCENDING;
-                }
+    private Map<String, Integer> sortResultByKey(Map<String, Integer> result) {
+        WordResultSorter sorter = getSorter();
+        if (sorter.equals(WordResultSorter.KEY_ASCENDING)) {
+            sorter = WordResultSorter.KEY_DESCENDING;
+        } else {
+            sorter = WordResultSorter.KEY_ASCENDING;
+        }
+        setSorter(sorter);
 
-                Map<String, Integer> sortedResult = sorter.getSortedWords(map);
-                showCountingWords(sortedResult);
-            }
-        });
+        return sorter.getSortedWords(result);
     }
 
     private void createTableBodyOnLayout(Map<String, Integer> countResult, TableLayout tableLayout) {
