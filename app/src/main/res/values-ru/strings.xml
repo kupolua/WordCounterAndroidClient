@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">"WordCounter"</string>
-    <string name="about_title">"O нас"</string>
-    <string name="example_title">"Получить статистику частоты употребления слов!"</string>
-    <string name="input_field_text">"Если Вы хотите, чтобы запрос был обработан как URL, пожалуйста, добавьте вначале http://"</string>
+    <string name="app_name">WordCounter</string>
+    <string name="about_title">O нас</string>
+    <string name="example_title">Получить статистику частоты употребления слов!</string>
+    <string name="input_field_text">Если Вы хотите, чтобы запрос был обработан как URL, пожалуйста, добавьте вначале http://</string>
     <string name="action_refresh">Обновить</string>
     <string name="title_home">Главная</string>
     <string name="title_about">О программе</string>
