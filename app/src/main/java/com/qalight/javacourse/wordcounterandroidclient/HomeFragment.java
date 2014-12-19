@@ -111,7 +111,6 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     }
 
     private void showResult(final Map<String, Integer> result) {
-
         TableLayout tableLayout = (TableLayout) getActivity().findViewById(R.id.resultTable);
         tableLayout.removeAllViews();
 
@@ -155,9 +154,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         TableRow tableRow = new TableRow(getActivity());
         tableRow.addView(sortBtnWord);
         tableRow.addView(sortBtnCount);
-
         setTableFormatting(tableLayout, tableRow);
-
         createTableBodyOnLayout(result, tableLayout);
     }
 
