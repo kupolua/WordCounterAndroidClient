@@ -23,12 +23,11 @@ import java.util.Map;
 import static com.qalight.javacourse.wordcounterandroidclient.acceptanceTest.utils.Util.getTableResult;
 
 public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActivity> {
-
-    private Solo solo;
-    private int waitTime = 3000;
     private final String localizationRu = "ru";
     private final int errorMassageNumOne = 0;
     private final int errorMassageNumTwo = 1;
+    private Solo solo;
+    private int waitTime = 3000;
 
     @TargetApi(Build.VERSION_CODES.FROYO)
     public CountingWordsTest() {
@@ -252,7 +251,7 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
         Assert.assertEquals(expectedErrorMassageTwo, actualErrorMassageTwo);
     }
 
-    public void changeLocale(String locale ){
+    public void changeLocale(String locale) {
         Resources resources = getActivity().getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();

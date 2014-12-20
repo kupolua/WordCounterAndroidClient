@@ -25,10 +25,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static utils.Constants.*;
+import static utils.Constants.COUNT_URL;
+import static utils.Constants.FILTER_OFF;
+import static utils.Constants.PARAM_IS_FILTER_WORDS;
+import static utils.Constants.PARAM_LANGUAGE;
+import static utils.Constants.PARAM_SORTING_ORDER;
+import static utils.Constants.PARAM_TEXT_COUNT;
+import static utils.Constants.VALUE_DESCENDING;
 
 public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, String> {
-
     private static final String TAG = WordCountRequestTask.class.getSimpleName();
 
     private Activity activity;
@@ -59,7 +64,7 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
     protected String doInBackground(RequestInFragment... params) {
         if (hasConnection(activity)) {
             try {
-                if (requestText == null || requestText.length() == 0){
+                if (requestText == null || requestText.length() == 0) {
                     addSysError(activity.getString(R.string.error_no_text));
                 } else {
                     return post(requestText, sortingOrder, isFilterWords);
@@ -163,8 +168,8 @@ public class WordCountRequestTask extends AsyncTask<RequestInFragment, Void, Str
         OkHttpClient client = new OkHttpClient();
         String locale = Locale.getDefault().getLanguage();
 
-        Request request = buildCountRequestWithAllParams(requestedValue, sortingResult,
-                                                         filterWords, locale);
+        Request request =
+                buildCountRequestWithAllParams(requestedValue, sortingResult, filterWords, locale);
         try {
             Response response = client.newCall(request).execute();
 

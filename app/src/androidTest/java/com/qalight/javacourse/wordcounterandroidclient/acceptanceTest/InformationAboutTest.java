@@ -18,9 +18,8 @@ import junit.framework.Assert;
 import java.util.Locale;
 
 public class InformationAboutTest extends ActivityInstrumentationTestCase2<MainActivity> {
-
-    private Solo solo;
     private final String localizationRu = "ru";
+    private Solo solo;
 
     @TargetApi(Build.VERSION_CODES.FROYO)
     public InformationAboutTest() {
@@ -54,7 +53,7 @@ public class InformationAboutTest extends ActivityInstrumentationTestCase2<MainA
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-    public void changeLocale(String locale ){
+    public void changeLocale(String locale) {
         Resources resources = getActivity().getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();

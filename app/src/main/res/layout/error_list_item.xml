@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/textError"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceLarge"
     android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingLeft="6dip"
-    android:textSize="8dp"
+    android:textAppearance="?android:attr/textAppearanceLarge"
     android:textColor="#ffff0000"
-    android:minHeight="?android:attr/listPreferredItemHeight">
-</TextView>
+    android:textSize="8dp"></TextView>

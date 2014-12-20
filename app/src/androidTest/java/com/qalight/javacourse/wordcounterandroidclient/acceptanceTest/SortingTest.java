@@ -19,14 +19,12 @@ import java.util.Map;
 import static com.qalight.javacourse.wordcounterandroidclient.acceptanceTest.utils.Util.getTableResult;
 
 public class SortingTest extends ActivityInstrumentationTestCase2<MainActivity> {
-
-    private Solo solo;
-    private int waitTime = 2000;
-
     private final String inputText = "zebra ZEBRA automotive звон автомат";
     private final String httpLink = "http://kupol.in.ua/wordcounter/testData/test_sorting1.docx";
     private final int wordField = 0;
     private final int countField = 1;
+    private Solo solo;
+    private int waitTime = 2000;
 
     @TargetApi(Build.VERSION_CODES.FROYO)
     public SortingTest() {

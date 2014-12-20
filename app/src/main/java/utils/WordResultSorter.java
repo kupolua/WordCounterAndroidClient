@@ -1,9 +1,15 @@
 package utils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public enum WordResultSorter {
-
     KEY_ASCENDING {
         @Override
         public Map<String, Integer> getSortedWords(Map<String, Integer> countedWords) {
@@ -61,8 +67,6 @@ public enum WordResultSorter {
         }
     };
 
-    public abstract Map<String, Integer> getSortedWords(Map<String, Integer> countedWords);
-
     public static WordResultSorter getOrderType(String sortingOrder) {
         final WordResultSorter defaultSorter = VALUE_DESCENDING;
         WordResultSorter result;
@@ -73,4 +77,6 @@ public enum WordResultSorter {
         }
         return result;
     }
+
+    public abstract Map<String, Integer> getSortedWords(Map<String, Integer> countedWords);
 }

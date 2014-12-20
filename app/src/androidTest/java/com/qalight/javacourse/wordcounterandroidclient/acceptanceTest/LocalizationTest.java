@@ -17,7 +17,6 @@ import junit.framework.Assert;
 import java.util.Locale;
 
 public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActivity> {
-
     private Solo solo;
     private int waitTime = 1000;
 
@@ -95,7 +94,7 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-    public void changeLocale(String locale ){
+    public void changeLocale(String locale) {
         Resources resources = getActivity().getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
