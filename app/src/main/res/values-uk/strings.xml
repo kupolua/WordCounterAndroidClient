@@ -3,7 +3,6 @@
     <string name="app_name">WordCounter</string>
     <string name="about_title">Про нас</string>
     <string name="action_refresh">Оновити</string>
-    <string name="button_countwords">Порахувати слова</string>
     <string name="checkbox_filter">Фільтрувати</string>
     <string name="example_title">Отримати статистику частоти вживання слів!</string>
     <string name="input_field_text">Якщо Ви хочете, щоб запит був оброблений як URL, будь ласка, додайте на початку http://</string>
@@ -17,4 +16,7 @@
     <string name="table_head_count_down">Кіл-ть ↓</string>
     <string name="error_no_connection">Відсутнє інтернет підключення</string>
     <string name="error_no_text">Заповніть поле для тексту</string>
+    <string name="button_count_words">Порахувати слова</string>
+    <string name="request_can_not_be_executed">Запит не може бути виконаний</string>
+    <string name="the_service_is_temporarily_unavailable">Сервіс тимчасово недоступний</string>
 </resources>
