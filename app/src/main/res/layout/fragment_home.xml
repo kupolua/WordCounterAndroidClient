@@ -79,7 +79,7 @@
         android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/errorList"
+        android:layout_alignTop="@+id/inputTextArea"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
