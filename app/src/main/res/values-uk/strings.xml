@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">WordCounter</string>
     <string name="about_title">Про нас</string>
-    <string name="action_refresh">Оновити</string>
     <string name="checkbox_filter">Фільтрувати</string>
     <string name="example_title">Отримати статистику частоти вживання слів!</string>
     <string name="input_field_text">Якщо Ви хочете, щоб запит був оброблений як URL, будь ласка, додайте на початку http://</string>
