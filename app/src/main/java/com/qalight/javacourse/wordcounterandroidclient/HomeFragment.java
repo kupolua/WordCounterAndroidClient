@@ -1,14 +1,17 @@
 package com.qalight.javacourse.wordcounterandroidclient;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -75,7 +79,25 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
 
     @Override
     public void onClick(View v) {
-        sendRequest();
+        if (isEmptyInput()) {
+            toast(getResources().getString(R.string.error_no_text));
+        } else {
+            sendRequest();
+        }
+    }
+
+    private boolean isEmptyInput() {
+        EditText editText = (EditText) getActivity().findViewById(R.id.inputTextArea);
+        return editText.getText().toString().trim().equals("");
+    }
+
+    private void toast(String message) {
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message,
+                Toast.LENGTH_LONG);
+        final int xCoordinate = 0;
+        final int yCoordinate = 0;
+        toast.setGravity(Gravity.CENTER, xCoordinate, yCoordinate);
+        toast.show();
     }
 
     @Override

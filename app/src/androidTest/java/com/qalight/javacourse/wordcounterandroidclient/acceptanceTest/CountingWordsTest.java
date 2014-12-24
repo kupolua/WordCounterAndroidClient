@@ -93,19 +93,17 @@ public class CountingWordsTest extends ActivityInstrumentationTestCase2<MainActi
         changeLocale(localizationRu);
         Thread.sleep(waitTime);
 
-        final String text = "";
-        final String expectedResult = "Заполните поле для текста";
+        final String text = " ";
+        final String textInToast = "Заполните поле для текста";
 
         // when
         solo.enterText((EditText) solo.getView(R.id.inputTextArea), text);
         solo.clickOnView(solo.getView(R.id.buttonCountWords));
-        Thread.sleep(waitTime);
 
-        ListView listView = (ListView) solo.getView(R.id.errorList);
-        String actualResult = ((TextView) listView.getChildAt(errorMassageNumOne)).getText().toString();
+        boolean result = solo.waitForText(textInToast);
 
         // then
-        Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertTrue(result);
     }
 
     public void testCountWordInWebPageViaUrl() throws Exception {
