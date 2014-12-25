@@ -1,4 +1,4 @@
-package com.qalight.javacourse.wordcounterandroidclient;
+package info.deepidea.wordcounter.androidclient;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

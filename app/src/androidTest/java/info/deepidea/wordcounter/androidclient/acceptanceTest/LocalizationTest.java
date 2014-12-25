@@ -1,4 +1,4 @@
-package com.qalight.javacourse.wordcounterandroidclient.acceptanceTest;
+package info.deepidea.wordcounter.androidclient.acceptanceTest;
 
 import android.annotation.TargetApi;
 import android.content.res.Configuration;
@@ -8,8 +8,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
 
-import com.qalight.javacourse.wordcounterandroidclient.MainActivity;
-import com.qalight.javacourse.wordcounterandroidclient.R;
+import info.deepidea.wordcounter.androidclient.MainActivity;
+import info.deepidea.wordcounter.androidclient.R;
 import com.robotium.solo.Solo;
 
 import junit.framework.Assert;

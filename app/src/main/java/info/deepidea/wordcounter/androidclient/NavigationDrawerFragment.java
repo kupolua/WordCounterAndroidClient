@@ -1,4 +1,4 @@
-package com.qalight.javacourse.wordcounterandroidclient;
+package info.deepidea.wordcounter.androidclient;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

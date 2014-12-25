@@ -1,4 +1,4 @@
-package com.qalight.javacourse.wordcounterandroidclient.acceptanceTest;
+package info.deepidea.wordcounter.androidclient.acceptanceTest;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.qalight.javacourse.wordcounterandroidclient.MainActivity;
-import com.qalight.javacourse.wordcounterandroidclient.R;
+import info.deepidea.wordcounter.androidclient.MainActivity;
+import info.deepidea.wordcounter.androidclient.R;
 import com.robotium.solo.Solo;
 
 import junit.framework.Assert;
@@ -16,7 +16,7 @@ import junit.framework.Assert;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.qalight.javacourse.wordcounterandroidclient.acceptanceTest.utils.Util.getTableResult;
+import static info.deepidea.wordcounter.androidclient.acceptanceTest.utils.Util.getTableResult;
 
 public class SortingTest extends ActivityInstrumentationTestCase2<MainActivity> {
     private final String inputText = "zebra ZEBRA automotive звон автомат";
