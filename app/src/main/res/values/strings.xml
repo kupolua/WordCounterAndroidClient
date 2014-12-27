@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WordCounter</string>
+    <string name="app_name">Word Counter</string>
     <string name="about_title">About us</string>
     <string name="example_title">Get most used words!</string>
     <string name="input_field_text">If you want your request to be processed as a URL, please add http:// prefix to it. Otherwise it will be handled as a plain text.</string>

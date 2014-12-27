@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WordCounter</string>
+    <string name="app_name">Word Counter</string>
     <string name="about_title">Про нас</string>
     <string name="checkbox_filter">Фільтрувати</string>
     <string name="example_title">Отримати статистику частоти вживання слів!</string>
