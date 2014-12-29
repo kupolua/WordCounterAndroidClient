@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'robolectric'
 
 android {
     compileSdkVersion 20
@@ -10,6 +11,7 @@ android {
         targetSdkVersion 20
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
     buildTypes {
         release {
@@ -24,6 +26,17 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/notice.txt'
     }
+
+    sourceSets {
+        androidTest {
+            setRoot('src/androidTest')
+        }
+    }
+}
+
+robolectric {
+    include '**/*Test.class'
+//    exclude '**/espresso/**/*.class'
 }
 
 dependencies {
@@ -35,5 +48,35 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.3'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.google.code.gson:gson:2.3'
+
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+    androidTestCompile('junit:junit:4.11') {
+        exclude module: 'hamcrest-core'
+    }
+    androidTestCompile('org.robolectric:robolectric:2.4') {
+        exclude module: 'classworlds'
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-provider-api'
+    }
+    androidTestCompile 'com.squareup:fest-android:1.0.+'
+
+    apply plugin: 'idea'
+
+    idea {
+        module {
+            testOutputDir = file('build/test-classes/debug')
+        }
+    }
 }
