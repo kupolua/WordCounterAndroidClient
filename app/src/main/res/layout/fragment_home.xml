@@ -9,7 +9,7 @@
     tools:context=".MainActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/aboutTitle"
+        android:id="@+id/aboutUsContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,14 +17,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="7dp"
-        android:text="@string/example_title"
+        android:text="@string/header_title"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/inputTextArea"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/aboutTitle"
+        android:layout_below="@+id/aboutUsContent"
         android:layout_marginBottom="7dp"
         android:ems="10"
         android:hint="@string/input_field_text"

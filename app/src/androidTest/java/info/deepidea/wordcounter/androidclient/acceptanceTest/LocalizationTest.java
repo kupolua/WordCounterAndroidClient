@@ -43,7 +43,7 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
         changeLocale(localizationEn);
         Thread.sleep(waitTime);
 
-        String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
+        String actualResult = ((TextView) solo.getView(R.id.aboutUsContent)).getText().toString();
 
         // then
         Assert.assertEquals(expectedResult, actualResult);
@@ -58,7 +58,7 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
         changeLocale(localizationRu);
         Thread.sleep(waitTime);
 
-        String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
+        String actualResult = ((TextView) solo.getView(R.id.aboutUsContent)).getText().toString();
 
         // then
         Assert.assertEquals(expectedResult, actualResult);
@@ -73,7 +73,7 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
         changeLocale(localizationUk);
         Thread.sleep(waitTime);
 
-        String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
+        String actualResult = ((TextView) solo.getView(R.id.aboutUsContent)).getText().toString();
 
         // then
         Assert.assertEquals(expectedResult, actualResult);
@@ -88,7 +88,7 @@ public class LocalizationTest extends ActivityInstrumentationTestCase2<MainActiv
         changeLocale(localizationFr);
         Thread.sleep(waitTime);
 
-        String actualResult = ((TextView) solo.getView(R.id.aboutTitle)).getText().toString();
+        String actualResult = ((TextView) solo.getView(R.id.aboutUsContent)).getText().toString();
 
         // then
         Assert.assertEquals(expectedResult, actualResult);

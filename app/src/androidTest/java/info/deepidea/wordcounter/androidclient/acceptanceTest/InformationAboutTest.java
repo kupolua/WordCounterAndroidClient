@@ -47,7 +47,7 @@ public class InformationAboutTest extends ActivityInstrumentationTestCase2<MainA
         solo.clickOnView(solo.getView(FrameLayout.class, navigationDrawerNum));
         solo.clickOnView(solo.getView(android.R.id.text1, aboutUsNum));
 
-        String actualResult = ((TextView) solo.getView(R.id.textView)).getText().toString();
+        String actualResult = ((TextView) solo.getView(R.id.aboutUsHeader)).getText().toString();
 
         // then
         Assert.assertEquals(expectedResult, actualResult);

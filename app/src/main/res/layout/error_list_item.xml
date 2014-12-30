@@ -8,4 +8,4 @@
     android:paddingLeft="6dip"
     android:textAppearance="?android:attr/textAppearanceLarge"
     android:textColor="#ffff0000"
-    android:textSize="8dp"></TextView>
+    android:textSize="8sp"></TextView>
