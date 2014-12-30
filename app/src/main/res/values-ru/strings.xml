@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Word Counter</string>
     <string name="about_us_header">O нас</string>
-    <string name="about_us_content">Мы команда молодых и амбициозных разработчиков програмного обеспечения из Украины. В своей работе мы ценим труд и честность. Мы преданы своему делу и стараемся обеспечить максимальное качество для наших клиентов</string>
+    <string name="about_us_content">Мы команда молодых и амбициозных разработчиков програмного обеспечения из Украины. В своей работе мы ценим труд и честность. Мы преданы своему делу и стараемся обеспечить максимальное качество для наших клиентов.</string>
     <string name="input_field_text">Если Вы хотите, чтобы запрос был обработан как URL, пожалуйста, добавьте вначале http://</string>
     <string name="title_home">Главная</string>
     <string name="title_about">О программе</string>
@@ -18,6 +18,6 @@
     <string name="button_count_words">Посчитать слова</string>
     <string name="request_can_not_be_executed">Запрос не может быть выполнен</string>
     <string name="the_service_is_temporarily_unavailable">Сервис временно недоступен</string>
-    <string name="about_program_content">Word Counter – это простой, быстрый и полностью бесплатный инструмент, который позволит Вам посчитать слова и отсортировать их по алфавиту или по частоте их встречаемости на веб-странице или в любом тексте</string>
+    <string name="about_program_content">Word Counter – это простой, быстрый и полностью бесплатный инструмент, который позволит Вам посчитать слова и отсортировать их по алфавиту или по частоте их встречаемости на веб-странице или в любом тексте.</string>
     <string name="header_title">Получить статистику частоты употребления слов!</string>
 </resources>

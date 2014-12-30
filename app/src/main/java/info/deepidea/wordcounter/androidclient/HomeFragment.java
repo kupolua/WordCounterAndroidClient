@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
     @Override
     public void onClick(View v) {
         if (isEmptyInput()) {
-            toast(getResources().getString(R.string.error_no_text));
+            showToast(getResources().getString(R.string.error_no_text));
         } else {
             sendRequest();
         }
@@ -86,12 +86,12 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
 
     private boolean isEmptyInput() {
         EditText editText = (EditText) getActivity().findViewById(R.id.inputTextArea);
-        return editText.getText().toString().trim().equals("");
+        return String.valueOf(editText.getText()).trim().equals("");
     }
 
-    private void toast(String message) {
+    private void showToast(String message) {
         Toast toast = Toast.makeText(getActivity().getApplicationContext(), message,
-                Toast.LENGTH_LONG);
+                Toast.LENGTH_SHORT);
         final int xCoordinate = 0;
         final int yCoordinate = 0;
         toast.setGravity(Gravity.CENTER, xCoordinate, yCoordinate);

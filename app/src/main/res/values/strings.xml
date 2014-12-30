@@ -3,8 +3,8 @@
     <string name="app_name">Word Counter</string>
     <string name="header_title">Get most used words!</string>
     <string name="about_us_header">About us</string>
-    <string name="about_us_content">We are a smart, ambitious and young team of software developers from Ukraine. We value hard work, collaboration and integrity</string>
-    <string name="about_program_content">Word Counter is a simple, fast and completely free tool, which will allow you to count words and sort them by alphabet or by frequency of occurrence on a web page or in any text</string>
+    <string name="about_us_content">We are a smart, ambitious and young team of software developers from Ukraine. We value hard work, collaboration and integrity.</string>
+    <string name="about_program_content">Word Counter is a simple, fast and completely free tool, which will allow you to count words and sort them by alphabet or by frequency of occurrence on a web page or in any text.</string>
     <string name="input_field_text">If you want your request to be processed as a URL, please add http:// prefix to it. Otherwise it will be handled as a plain text.</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
