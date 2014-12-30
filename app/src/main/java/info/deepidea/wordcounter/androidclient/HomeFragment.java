@@ -168,6 +168,9 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
             }
         });
 
+        sortBtnWord.setGravity(Gravity.CENTER);
+        sortBtnCount.setGravity(Gravity.CENTER);
+
         sortBtnWord.setText(wordBtnText);
         sortBtnCount.setText(countBtnText);
 
@@ -213,7 +216,10 @@ public class HomeFragment extends Fragment implements RequestInFragment, OnClick
         TableRow tableRow;
         for (Map.Entry<String, Integer> entry : countResult.entrySet()) {
             TextView word = new TextView(getActivity());
+            final int columnWidthFixing = 0;
+            word.setWidth(columnWidthFixing);
             TextView count = new TextView(getActivity());
+            count.setGravity(Gravity.CENTER);
 
             word.setText(entry.getKey());
             count.setText(String.valueOf(entry.getValue()));
