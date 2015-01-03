@@ -1,23 +1,22 @@
-package info.deepidea.wordcounter.androidclient.acceptanceTest;
+package info.deepidea.wordcounter.androidclient;
 
 import android.app.Activity;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import info.deepidea.wordcounter.androidclient.MainActivity;
-
-import static org.junit.Assert.assertTrue;
-
-@Config(manifest = "./src/main/AndroidManifest.xml")
+@Config(emulateSdk = 18)
 @RunWith(RobolectricTestRunner.class)
 public class RobolectricTest {
+
     @Test
-    public void testSomething() throws Exception {
+    public void testActivity() throws Exception {
         Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
-        assertTrue(activity != null);
+
+        Assert.assertTrue(activity != null);
     }
 }
