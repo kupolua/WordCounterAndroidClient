@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'robolectric'
 
 android {
     compileSdkVersion 20
@@ -36,4 +37,18 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.google.code.gson:gson:2.3'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+    androidTestCompile 'org.robolectric:robolectric:2.3'
 }
+
+//robolectric {
+//    include '**/*RobolectricTest.class'
+//
+//    maxHeapSize = '2048m'
+//    maxParallelForks = 4
+//
+//    forkEvery = 150
+//    ignoreFailures true
+//
+//    afterTest { descriptor, result ->
+//        println "Executing test for ${descriptor.name} with result: ${result.resultType}"
+//    }
