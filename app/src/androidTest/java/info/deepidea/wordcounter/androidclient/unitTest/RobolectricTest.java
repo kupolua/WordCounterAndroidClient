@@ -20,6 +20,6 @@ public class RobolectricTest {
         Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
 
         Assert.assertTrue(activity != null);
-        //test line2
+        //test line3
     }
 }
